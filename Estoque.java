@@ -15,7 +15,7 @@ public class Estoque {
     }
 
 
-
+//teste sandro
     public String getTipo() {
         return tipo;
     }
