@@ -1,0 +1,2 @@
+# LojaSolidariaPPI
+Trabalho faculdade
