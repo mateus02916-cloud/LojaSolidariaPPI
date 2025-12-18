@@ -13,9 +13,9 @@ public class Estoque {
         this.tamanhoLetra = tamanhoLetra; this.tamanhoNumero = tamanhoNumero;
         this.quantidade = quantidade;
     }
+//teste marcia
 
-
-
+//teste sandroo
     public String getTipo() {
         return tipo;
     }
