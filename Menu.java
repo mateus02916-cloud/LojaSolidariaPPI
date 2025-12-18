@@ -18,7 +18,7 @@ public class Menu {
 
         do{
             System.out.println("=== CONTROLE DE ESTOQUE - LOJA DE ROUPAS ===");
-            System.out.println("1. Exibir estoque atual");
+            System.out.println("1. Exibir estoque ");
             System.out.println("2. Adicionar quantidade");
             System.out.println("3. Remover quantidade");
             System.out.println("4. Listar categorias");
