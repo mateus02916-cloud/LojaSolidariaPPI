@@ -5,7 +5,7 @@ public class Menu {
     private Estoque estoque;
     private Scanner scanner;
 
-     public Menu(){
+    public Menu(){
 
         estoque = new Estoque();
         scanner = new Scanner(System.in);
