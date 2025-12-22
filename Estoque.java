@@ -24,21 +24,48 @@ public class Estoque {
                     itens.add(new Itens(categoria, quantidade));
                 }
 
-
+    public void salvarEstoque(){
+        try (PrintWriter pw = new PrintWriter(new FileWriter(ARQUIVO_CSV))){
+            
+            for (Itens intes : itens){
+                pw.println(itens.toString());
             }
 
 
+        } catch (IOExeption e){
+            System.out.println("Erro ao salver o arquivo" + e.getMessage());
+
         }
-    }
-
-
-
-
-
 
 
 
     }
+  
+
+    }
+        }
+
+    }
+
+}
+
+
+
+
+
+
+
+        
+    
+
+
+
+
+
+
+
+
+    
 
 
 
