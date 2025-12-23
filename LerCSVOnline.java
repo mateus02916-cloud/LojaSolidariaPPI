@@ -17,8 +17,8 @@ public class LerCSVOnline {
                 String[] dados = linha.split(",");
 
                 System.out.println(
-                    dados[0] + " | " +
-                    dados[1] + " | " +
+                    dados[0] + " , " +
+                    dados[1] + " , " +
                     dados[2]
                 );
             }

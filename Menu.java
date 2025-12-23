@@ -153,4 +153,21 @@ public class Menu {
     }
 
 
+    public void adicionar() { //
+        menuAdicionar();
+    }
+    
+    public void remover() {
+        menuRemover();
+    }
+
+    public void listarFamilias() {
+        menuListarFamilias(); 
+    }
+
+    public void pesquisarMembro() {
+        menuPesquisarMembro(); 
+    }
+
+
 }
