@@ -23,7 +23,7 @@ public class Itens {
         return quantidade;
     }
 
-    public void setQuantidade(){
+    public void setQuantidade(int quantidade){
         this.quantidade = quantidade;
 
     }

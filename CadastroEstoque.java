@@ -21,7 +21,7 @@ public class CadastroEstoque{
     public String getFeminino() {
         return feminino;
     }
-    public String getinfantil(){
+    public String getInfantil(){
         return infantil;
     }
     public String getCalcados(){
