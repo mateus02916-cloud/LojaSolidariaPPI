@@ -20,9 +20,7 @@ public class Menu {
             System.out.println("1. Exibir estoque ");
             System.out.println("2. Adicionar quantidade");
             System.out.println("3. Remover quantidade");
-            System.out.println("4. Listar categorias");
-            System.out.println("5. Exibe todas as famílias que retiraram peças");
-            System.out.println("6. Pesquisar pelo nome de um membro familiar");
+            System.out.println("4. Listar categorias");   
             System.out.println("0. Sair");
             System.out.print("Escolha uma opção: ");
 
