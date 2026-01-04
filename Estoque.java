@@ -3,12 +3,35 @@ import java.util.*;
 
 public class Estoque {
     private List<Itens> itens;
-    private static final String ARQUIVO_CSV = "estoque.csv";
-    private static final String[] CATEGORIAS = { "Masculinos", "Femininos", "Infantil", "Calçados", "Diversos" };
+    private static String ARQUIVO_CSV = "Estoque.csv";
+    private static String[] CATEGORIAS = { "Masculinos", "Femininos", "Infantil", "Calçados", "Diversos" };
     
     public Estoque() {
         itens = new ArrayList<>();
-        lerEstoque(); 
+        lerEstoque();
+        addCategorias();
+
+
+
+    }
+
+    private void addCategorias(){
+        for (String nome : CATEGORIAS) {
+            if (!criaCategoriaNaLista(nome)){
+                itens.add(new Itens(nome, 0));
+            }
+        }
+        salvarEstoque();
+    }
+
+
+    private boolean criaCategoriaNaLista(String nome){
+        for (Itens item : itens) {
+            if (item.getCategoria().equalsIgnoreCase(nome)){
+                return true;
+            }
+        }
+        return false;
     }
 
     private void lerEstoque() {
