@@ -45,7 +45,7 @@ public class Menu {
             }
 
             if (opcao != 0) {
-                System.out.println("\nPressione Enter para continuar...");
+                System.out.println("\n Pressione Enter para continuar...");
                 scanner.nextLine();
             }
         } while (opcao != 0);
@@ -54,14 +54,21 @@ public class Menu {
 
     private void menuAdicionar() {
         System.out.println("\n=== ADICIONAR QUANTIDADE ===");
-        estoque.listarCategorias();
-        
-        System.out.print("Digite o nome da categoria: ");
-        String categoria = scanner.nextLine();
+       String[] categorias = estoque.getCategorias();
 
-        if (!estoque.categoriaExiste(categoria)) {
-            System.out.println("Categoria inválida!");
+       for (int i = 0; i < categorias.length; i ++){
+        System.out.println((i + 1) + ". " + categorias[i]);
+
+       }
+        
+        System.out.print("Digite o número da uma categoria para adicionar quantidade de doações: ");
+        int escolha = scanner.nextInt();
+        scanner.nextLine();
+
+        if (escolha < 1 || escolha > categorias.length){
+            System.out.println("Opção inválida");
             return;
+        }
         }
 
         System.out.print("Digite a quantidade a adicionar: ");
@@ -73,7 +80,7 @@ public class Menu {
             return;
         }
 
-        estoque.adicionarQuantidade(categoria, quantidade);
+        estoque.adicionarQuantidade(escolha -1, quantidade);
     }
 
     private void menuRemover() {
