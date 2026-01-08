@@ -11,6 +11,7 @@ public class Menu {
 
     public void exibirMenu() {
         int opcao;
+
         do {
             System.out.println("\n=== CONTROLE DE ESTOQUE - LOJA DE ROUPAS ===");
             System.out.println("1. Exibir estoque");
@@ -24,19 +25,31 @@ public class Menu {
             scanner.nextLine(); 
 
             switch (opcao) {
-                case 1: estoque.exibirEstoque(); break;
-                case 2: menuAdicionar(); break;
-                case 3: menuRemover(); break;
-                case 4: estoque.listarCategorias(); break;
-                case 0: System.out.println("Saindo..."); break;
-                default: System.out.println("Opção inválida!");
+                case 1:
+                    estoque.exibirEstoque();
+                    break;
+                case 2:
+                    menuAdicionar();
+                    break;
+                case 3:
+                    menuRemover();
+                    break;
+                case 4:
+                    estoque.listarCategorias();
+                    break;
+                case 0:
+                    System.out.println("Saindo do sistema...");
+                    break;
+                default:
+                    System.out.println("Opção inválida! Tente novamente.");
             }
 
             if (opcao != 0) {
-                System.out.println("\nPressione Enter para continuar...");
+                System.out.println("\n Pressione Enter para continuar...");
                 scanner.nextLine();
             }
         } while (opcao != 0);
+        scanner.close();
     }
 
     private void menuAdicionar() {
@@ -47,7 +60,37 @@ public class Menu {
             System.out.println((i + 1) + ". " + categorias[i]);
         }
 
-        System.out.print("Escolha o número da categoria: ");
+        System.out.print("Digite o número da categoria: ");
+        int escolha = scanner.nextInt();
+        scanner.nextLine();
+
+        if (escolha < 1 || escolha > categorias.length) {
+            System.out.println("Opção inválida");
+            return;
+        }
+
+        System.out.print("Digite a quantidade a adicionar: ");
+        int quantidade = scanner.nextInt();
+        scanner.nextLine();
+
+        if (quantidade <= 0) {
+            System.out.println("Quantidade deve ser maior que zero!");
+            return;
+        }
+
+        estoque.adicionarQuantidade(categorias[escolha - 1], quantidade);
+    }
+
+    private void menuRemover() {
+        System.out.println("\n=== REMOVER QUANTIDADE ===");
+        String[] categorias = estoque.getCategorias();
+
+        // Lista as categorias por índice
+        for (int i = 0; i < categorias.length; i++) {
+            System.out.println((i + 1) + ". " + categorias[i]);
+        }
+
+        System.out.print("Digite o número da categoria para remover: ");
         int escolha = scanner.nextInt();
         scanner.nextLine();
 
@@ -56,35 +99,16 @@ public class Menu {
             return;
         }
 
-        System.out.print("Digite a quantidade: ");
-        int quantidade = scanner.nextInt();
-        scanner.nextLine();
-
-        if (quantidade <= 0) {
-            System.out.println("Quantidade deve ser positiva!");
-            return;
-        }
-
-        // Passamos o nome da categoria baseado na escolha numérica
-        estoque.adicionarQuantidade(categorias[escolha - 1], quantidade);
-    }
-
-    private void menuRemover() {
-        System.out.println("\n=== REMOVER QUANTIDADE ===");
-        estoque.listarCategorias();
-
-        System.out.print("Digite o nome da categoria: ");
-        String categoria = scanner.nextLine();
-
-        if (!estoque.categoriaExiste(categoria)) {
-            System.out.println("Categoria inválida!");
-            return;
-        }
-
         System.out.print("Digite a quantidade a remover: ");
         int quantidade = scanner.nextInt();
         scanner.nextLine();
 
-        estoque.removerQuantidade(categoria, quantidade);
+        if (quantidade <= 0) {
+            System.out.println("Quantidade deve ser maior que zero!");
+            return;
+        }
+
+        // Envia o nome da categoria baseada no índice selecionado
+        estoque.removerQuantidade(categorias[escolha - 1], quantidade);
     }
 }
