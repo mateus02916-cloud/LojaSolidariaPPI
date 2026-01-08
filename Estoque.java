@@ -12,10 +12,6 @@ public class Estoque {
         addCategorias();
     }
 
-    /**
-     * Retorna o array de categorias fixas.
-     * Este método resolve o erro que aparecia no seu Menu.java.
-     */
     public String[] getCategorias() {
         return CATEGORIAS;
     }
@@ -50,7 +46,7 @@ public class Estoque {
                 }
             }
         } catch (IOException e) {
-            // Se o arquivo não existir ainda, apenas ignora
+           
         }
     }
 
