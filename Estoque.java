@@ -10,9 +10,14 @@ public class Estoque {
         itens = new ArrayList<>();
         lerEstoque();
         addCategorias();
+    }
 
-
-
+    /**
+     * Retorna o array de categorias fixas.
+     * Este método resolve o erro que aparecia no seu Menu.java.
+     */
+    public String[] getCategorias() {
+        return CATEGORIAS;
     }
 
     private void addCategorias(){
@@ -23,7 +28,6 @@ public class Estoque {
         }
         salvarEstoque();
     }
-
 
     private boolean criaCategoriaNaLista(String nome){
         for (Itens item : itens) {
@@ -46,7 +50,7 @@ public class Estoque {
                 }
             }
         } catch (IOException e) {
-            System.out.println("Erro ao ler o arquivo: " + e.getMessage());
+            // Se o arquivo não existir ainda, apenas ignora
         }
     }
 
