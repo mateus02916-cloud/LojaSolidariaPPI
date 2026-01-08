@@ -108,7 +108,7 @@ public class Menu {
             return;
         }
 
-        // Envia o nome da categoria baseada no índice selecionado
+        
         estoque.removerQuantidade(categorias[escolha - 1], quantidade);
     }
 }
