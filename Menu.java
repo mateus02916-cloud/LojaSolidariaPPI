@@ -18,6 +18,8 @@ public class Menu {
             System.out.println("2. Adicionar quantidade");
             System.out.println("3. Remover quantidade");
             System.out.println("4. Listar categorias");
+            System.out.println("5. Exibix quantidade em estoque");
+            System.out.println("6. Gerar relalatório");
             System.out.println("0. Sair");
             System.out.print("Escolha uma opção: ");
 
@@ -52,12 +54,14 @@ public class Menu {
         scanner.close();
     }
 
+
     private void menuAdicionar() {
         System.out.println("\n=== ADICIONAR QUANTIDADE ===");
        String[] categorias = estoque.getCategorias();
 
        for (int i = 0; i < categorias.length; i ++){
         System.out.println((i + 1) + ". " + categorias[i]);
+       }
 
        }
         
@@ -81,7 +85,8 @@ public class Menu {
         }
 
         estoque.adicionarQuantidade(escolha -1, quantidade);
-    }
+    
+
 
     private void menuRemover() {
         System.out.println("\n=== REMOVER QUANTIDADE ===");
@@ -114,4 +119,8 @@ public class Menu {
     public void remover() {
         menuRemover();
     }
-}
+
+
+
+
+
