@@ -11,82 +11,63 @@ public class Menu {
 
     public void exibirMenu() {
         int opcao;
-
         do {
             System.out.println("\n=== CONTROLE DE ESTOQUE - LOJA DE ROUPAS ===");
             System.out.println("1. Exibir estoque");
             System.out.println("2. Adicionar quantidade");
             System.out.println("3. Remover quantidade");
             System.out.println("4. Listar categorias");
-            System.out.println("5. Exibix quantidade em estoque");
-            System.out.println("6. Gerar relalatório");
             System.out.println("0. Sair");
             System.out.print("Escolha uma opção: ");
 
             opcao = scanner.nextInt();
-            scanner.nextLine(); // Limpar o buffer
+            scanner.nextLine(); 
 
             switch (opcao) {
-                case 1:
-                    estoque.exibirEstoque();
-                    break;
-                case 2:
-                    menuAdicionar();
-                    break;
-                case 3:
-                    menuRemover();
-                    break;
-                case 4:
-                    estoque.listarCategorias();
-                    break;
-                case 0:
-                    System.out.println("Saindo do sistema...");
-                    break;
-                default:
-                    System.out.println("Opção inválida! Tente novamente.");
+                case 1: estoque.exibirEstoque(); break;
+                case 2: menuAdicionar(); break;
+                case 3: menuRemover(); break;
+                case 4: estoque.listarCategorias(); break;
+                case 0: System.out.println("Saindo..."); break;
+                default: System.out.println("Opção inválida!");
             }
 
             if (opcao != 0) {
-                System.out.println("\n Pressione Enter para continuar...");
+                System.out.println("\nPressione Enter para continuar...");
                 scanner.nextLine();
             }
         } while (opcao != 0);
-        scanner.close();
     }
-
 
     private void menuAdicionar() {
         System.out.println("\n=== ADICIONAR QUANTIDADE ===");
-       String[] categorias = estoque.getCategorias();
+        String[] categorias = estoque.getCategorias();
 
-       for (int i = 0; i < categorias.length; i ++){
-        System.out.println((i + 1) + ". " + categorias[i]);
-       }
+        for (int i = 0; i < categorias.length; i++) {
+            System.out.println((i + 1) + ". " + categorias[i]);
+        }
 
-       }
-        
-        System.out.print("Digite o número da uma categoria para adicionar quantidade de doações: ");
+        System.out.print("Escolha o número da categoria: ");
         int escolha = scanner.nextInt();
         scanner.nextLine();
 
-        if (escolha < 1 || escolha > categorias.length){
-            System.out.println("Opção inválida");
+        if (escolha < 1 || escolha > categorias.length) {
+            System.out.println("Opção inválida!");
             return;
         }
-        }
 
-        System.out.print("Digite a quantidade a adicionar: ");
+        System.out.print("Digite a quantidade: ");
         int quantidade = scanner.nextInt();
-        scanner.nextLine(); // Limpar buffer
+        scanner.nextLine();
 
         if (quantidade <= 0) {
-            System.out.println("Quantidade deve ser maior que zero!");
+            System.out.println("Quantidade deve ser positiva!");
             return;
         }
 
-        estoque.adicionarQuantidade(escolha -1, quantidade);
-    
-
+        // Passamos o nome da categoria baseado na escolha numérica
+        estoque.adicionarQuantidade(categorias[escolha - 1], quantidade);
+    }
 
     private void menuRemover() {
         System.out.println("\n=== REMOVER QUANTIDADE ===");
@@ -102,25 +83,8 @@ public class Menu {
 
         System.out.print("Digite a quantidade a remover: ");
         int quantidade = scanner.nextInt();
-        scanner.nextLine(); // Limpar buffer
-
-        if (quantidade <= 0) {
-            System.out.println("Quantidade deve ser maior que zero!");
-            return;
-        }
+        scanner.nextLine();
 
         estoque.removerQuantidade(categoria, quantidade);
     }
-
-    public void adicionar() {
-        menuAdicionar();
-    }
-    
-    public void remover() {
-        menuRemover();
-    }
-
-
-
-
-
+}
