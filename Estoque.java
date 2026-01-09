@@ -1,10 +1,16 @@
 import java.io.*;
 import java.util.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Estoque {
     private List<Itens> itens;
     private static final String ARQUIVO_CSV = "Estoque.csv";
     private static final String[] CATEGORIAS = { "Masculinos", "Femininos", "Infantil", "Calçados", "Diversos" };
+
+    private List<Itens> dados;
+    private static final String RELATORIO_CSV = "Relatorio.csv";
+
     
     public Estoque() {
         itens = new ArrayList<>();
@@ -104,4 +110,44 @@ public class Estoque {
             }
         }
     }
+
+
+    public double comparaData(){
+        //percorre a lista de dados e compara as datas
+        //tera que ter um contador de entradas
+    }
+
+    public void getData() {
+        LocalDate data = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        data.format(formatter);
+    }
+
+
+    public void gerarRelatorioMensal(int mes, int ano) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String mesAno = String.format("%02d/%d", mes, ano);
+        System.out.println("\n=== RELATÓRIO DE ESTOQUE - " + mesAno + " ===");
+        exibirEstoque();
+
+
+        File relatorio = new File(RELATORIO_CSV);
+        try (BufferedReader br = new BufferedReader(new FileReader(RELATORIO_CSV))) {
+            String linha;
+            while ((linha = br.readLine()) != null) {
+                String[] dados = linha.split(",");
+
+                if (dados.length == 3) {
+                    String categoria = dados[0].trim();
+                    int quantidade = Integer.parseInt(dados[1].trim());
+                    itens.add(new Itens(categoria, quantidade));
+                }
+            }
+        }
+        catch (IOException e) {
+
+            System.out.println("Erro ao carregar dados do relatório: " + e.getMessage());
+        }
+    }
+    
 }
