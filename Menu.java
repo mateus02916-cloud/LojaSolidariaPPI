@@ -111,4 +111,14 @@ public class Menu {
         
         estoque.removerQuantidade(categorias[escolha - 1], quantidade);
     }
+
+    private void menuRelatorio() {
+        //data, quantidade 
+
+        System.out.println("Se deseja registar com a data de hoje DIGITE 1, caso deseje registar com outra data, DIGITE AQUI (dd/mm/aaaa): ");
+        String opcaoData = scanner.nextLine();
+
+        
+
+    }
 }
