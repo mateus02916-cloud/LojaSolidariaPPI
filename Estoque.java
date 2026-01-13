@@ -10,6 +10,7 @@ public class Estoque {
         itens = new ArrayList<>();
         lerEstoque();
         addCategoriasPadrao();
+        gerarRelatorioMensal(0, 0);
     }
 
    
