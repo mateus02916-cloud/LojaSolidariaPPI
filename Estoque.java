@@ -11,19 +11,15 @@ public class Estoque {
     private List<Retiradas> retiradas;
     private static final String RELATORIO_CSV = "Relatorio.csv";
 
-    private List<RetiradasPorDia> retiradasPorDia;
     private static final String RetiradasPorDia_CSV = "RetiradasPorDia.csv";
+    private List<RetiradasPorDia> retiradasPorDia;
 
     private static final String[] CATEGORIAS = { "Masculinos", "Femininos", "Infantil", "Calçados", "Diversos" };
     
     public Estoque() {
-        this.itens = new ArrayList<>();
-        this.retiradas = new ArrayList<>();
-        this.retiradasPorDia = new ArrayList<>();
-
+        itens = new ArrayList<>();
         lerEstoque();
         addCategoriasPadrao();
-        
     }
 
    
@@ -119,24 +115,15 @@ public class Estoque {
         }
     }
 
-     public String getDia() {
-        String dia = "";
-            String data = String.valueOf(retiradas.get(0)); 
-            String[] partes = data.split("/");             
-            dia = partes[0];   
-        return dia;
-     }
 
-    public boolean comparaData() {
-
-        boolean igualData = false;
+    public boolean comparaData(List<Retiradas> retiradas) {
+        int totalRetiradasDia = 0;
+        int temp = 0;
+        String data = String.valueOf(retiradas.get(0)); 
+        String[] partes = data.split("/");             
+        String dia = partes[0];   
         
         for (Retiradas retirada : retiradas) {
-            int totalRetiradasDia = 0;
-            String data = retirada.getData();
-            int temp = 0;
-            String dia = getDia();
-
             int i = 1;
             while (i <=31) {
                 if (dia.equals(String.valueOf(i))){
@@ -144,15 +131,10 @@ public class Estoque {
 
                     totalRetiradasDia = temp;
 
-                    retiradasPorDia.add(new RetiradasPorDia(data, totalRetiradasDia));
-                    
-                    i++;
-                    
-                    igualData = true;
+                    retiradasPorDia.add(new retiradasPorDia(totalRetiradasDia));
                 }
             }
-
-            return igualData;
+            
         }
 
         //percorre a lista de retirada e compara as datas
@@ -187,7 +169,8 @@ public class Estoque {
         System.out.println("\n=== RELATÓRIO DE ESTOQUE - " + mesAno + " ===");
         exibirEstoque();
 
-        //ter que fazer para a saida e para entrada de itens no estoque -  retiradas e retiradas por dia 
+        
+
         File relatorio = new File(RELATORIO_CSV);
         try (BufferedReader br = new BufferedReader(new FileReader(RELATORIO_CSV))) {
             String linha;
@@ -195,9 +178,9 @@ public class Estoque {
                 String[] retirada = linha.split(",");
 
                 if (retirada.length == 3) {
-                    String data = retirada[0].trim();
+                    String dia = retirada[0].trim();
                     int itens_saida = Integer.parseInt(retirada[1].trim());
-                    retiradas.add(new Retiradas(data, itens_saida/*qqntd*/));
+                    itens.add(new Itens(dia, itens_saida));
 
                 }
             }
