@@ -65,9 +65,6 @@ public class Menu {
         int escolha = scanner.nextInt();
         scanner.nextLine();
 
-        System.out.println("Se deseja registar com a data de hoje DIGITE 1, caso deseje registar com outra data, DIGITE AQUI (dd/mm/aaaa): ");
-        String opcaoData = scanner.nextLine();
-        
         if (escolha < 1 || escolha > categorias.length) {
             System.out.println("Opção inválida");
             return;
@@ -98,9 +95,6 @@ public class Menu {
         int escolha = scanner.nextInt();
         scanner.nextLine();
 
-        System.out.println("Se deseja registar com a data de hoje DIGITE 1, caso deseje registar com outra data, DIGITE AQUI (dd/mm/aaaa): ");
-        String opcaoData = scanner.nextLine();
-
         if (escolha < 1 || escolha > categorias.length) {
             System.out.println("Opção inválida!");
             return;
@@ -122,7 +116,8 @@ public class Menu {
     private void menuRelatorio() {
         //data, quantidade 
 
-        
+        System.out.println("Se deseja registar com a data de hoje DIGITE 1, caso deseje registar com outra data, DIGITE AQUI (dd/mm/aaaa): ");
+        String opcaoData = scanner.nextLine();
 
         
 
