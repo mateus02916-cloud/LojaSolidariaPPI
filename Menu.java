@@ -18,6 +18,7 @@ public class Menu {
             System.out.println("2. Adicionar quantidade");
             System.out.println("3. Remover quantidade");
             System.out.println("4. Listar categorias");
+            System.out.println("5. Gerar relatório");
             System.out.println("0. Sair");
             System.out.print("Escolha uma opção: ");
 
