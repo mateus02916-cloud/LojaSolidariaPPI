@@ -119,13 +119,13 @@ public class Estoque {
         }
     }
 
-    public String getDia() {
+     public String getDia() {
         String dia = "";
             String data = String.valueOf(retiradas.get(0)); 
             String[] partes = data.split("/");             
             dia = partes[0];   
         return dia;
-    }
+     }
 
     public boolean comparaData() {
 
@@ -140,8 +140,7 @@ public class Estoque {
             int i = 1;
             while (i <=31) {
                 if (dia.equals(String.valueOf(i))){
-
-                    temp = totalRetiradasDia + totalRetiradasDia;
+                    temp = totalRetiradasDia += totalRetiradasDia;
 
                     totalRetiradasDia = temp;
 
@@ -185,7 +184,7 @@ public class Estoque {
     public void gerarRelatorioMensal(int mes, int ano) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String mesAno = String.format("%02d/%d", mes, ano);
-        System.out.println("\nRELATÓRIO DE ESTOQUE" + mesAno );
+        System.out.println("\n=== RELATÓRIO DE ESTOQUE - " + mesAno + " ===");
         exibirEstoque();
 
         //ter que fazer para a saida e para entrada de itens no estoque -  retiradas e retiradas por dia 
@@ -197,8 +196,8 @@ public class Estoque {
 
                 if (retirada.length == 3) {
                     String data = retirada[0].trim();
-                    int itens_retirada = Integer.parseInt(retirada[1].trim());
-                    retiradas.add(new Retiradas(data, itens_retirada/*qqntd*/));
+                    int itens_saida = Integer.parseInt(retirada[1].trim());
+                    retiradas.add(new Retiradas(data, itens_saida/*qqntd*/));
 
                 }
             }
