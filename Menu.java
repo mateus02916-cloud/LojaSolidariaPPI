@@ -14,10 +14,11 @@ public class Menu {
 
         do {
             System.out.println("\n=== CONTROLE DE ESTOQUE - LOJA DE ROUPAS ===");
-            System.out.println("1. Exibir estoque");
-            System.out.println("2. Adicionar quantidade");
-            System.out.println("3. Remover quantidade");
+            System.out.println("1. Exibir quantidade total em estoque");
+            System.out.println("2. Adicionar quantidade (Entrada)");
+            System.out.println("3. Remover quantidade (Saída)");
             System.out.println("4. Listar categorias");
+            System.out.println("5. Gerar relatório mensal");
             System.out.println("0. Sair");
             System.out.print("Escolha uma opção: ");
 
@@ -26,7 +27,7 @@ public class Menu {
 
             switch (opcao) {
                 case 1:
-                    estoque.exibirEstoque();
+                    estoque.exibirEstoqueTotal();  // AGORA MOSTRA APENAS TOTAL
                     break;
                 case 2:
                     menuAdicionar();
@@ -37,6 +38,9 @@ public class Menu {
                 case 4:
                     estoque.listarCategorias();
                     break;
+                case 5:
+                    menuRelatorio();
+                    break;
                 case 0:
                     System.out.println("Saindo do sistema...");
                     break;
@@ -45,7 +49,7 @@ public class Menu {
             }
 
             if (opcao != 0) {
-                System.out.println("\n Pressione Enter para continuar...");
+                System.out.println("\nPressione Enter para continuar...");
                 scanner.nextLine();
             }
         } while (opcao != 0);
@@ -53,7 +57,7 @@ public class Menu {
     }
 
     private void menuAdicionar() {
-        System.out.println("\n=== ADICIONAR QUANTIDADE ===");
+        System.out.println("\n=== ADICIONAR QUANTIDADE (REGISTRAR ENTRADA) ===");
         String[] categorias = estoque.getCategorias();
 
         for (int i = 0; i < categorias.length; i++) {
@@ -82,15 +86,14 @@ public class Menu {
     }
 
     private void menuRemover() {
-        System.out.println("\n=== REMOVER QUANTIDADE ===");
+        System.out.println("\n=== REMOVER QUANTIDADE (REGISTRAR SAÍDA) ===");
         String[] categorias = estoque.getCategorias();
 
-        // Lista as categorias por índice
         for (int i = 0; i < categorias.length; i++) {
             System.out.println((i + 1) + ". " + categorias[i]);
         }
 
-        System.out.print("Digite o número da categoria para remover: ");
+        System.out.print("Digite o número da categoria: ");
         int escolha = scanner.nextInt();
         scanner.nextLine();
 
@@ -108,7 +111,23 @@ public class Menu {
             return;
         }
 
-        
         estoque.removerQuantidade(categorias[escolha - 1], quantidade);
+    }
+    
+    private void menuRelatorio() {
+        System.out.println("\n=== GERAR RELATÓRIO MENSAL ===");
+        System.out.print("Digite o mês (1-12): ");
+        int mes = scanner.nextInt();
+        
+        System.out.print("Digite o ano (ex: 2025): ");
+        int ano = scanner.nextInt();
+        scanner.nextLine();
+        
+        if (mes < 1 || mes > 12) {
+            System.out.println("Mês inválido!");
+            return;
+        }
+        
+        estoque.gerarRelatorioMensal(mes, ano);
     }
 }
