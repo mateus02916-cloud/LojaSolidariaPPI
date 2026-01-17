@@ -145,23 +145,20 @@ public class Estoque {
                     int quantidade = Integer.parseInt(dados[2].trim());
                     String dataStr = dados[3].trim();
                     
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-                    LocalDate data = LocalDate.parse(dataStr, formatter);
+                    DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                    LocalDate data = LocalDate.parse(dataStr, formato);
                     
                     // Verificar se é do mês e ano solicitado
                     if (data.getMonthValue() == mes && data.getYear() == ano) {
                         if (tipo.equals("ENTRADA")) {
-                            entradasPorCategoria.put(categoria, 
-                                entradasPorCategoria.getOrDefault(categoria, 0) + quantidade);
+                            entradasPorCategoria.put(categoria, entradasPorCategoria.getOrDefault(categoria, 0) + quantidade);
                             totalEntradas += quantidade;
                         } else if (tipo.equals("SAIDA")) {
                             // Somar itens saídos por dia
-                            saidasPorDia.put(dataStr, 
-                                saidasPorDia.getOrDefault(dataStr, 0) + quantidade);
+                            saidasPorDia.put(dataStr, saidasPorDia.getOrDefault(dataStr, 0) + quantidade);
                             
                             // Contar atendimentos (1 por saída)
-                            atendimentosPorDia.put(dataStr, 
-                                atendimentosPorDia.getOrDefault(dataStr, 0) + 1);
+                            atendimentosPorDia.put(dataStr, atendimentosPorDia.getOrDefault(dataStr, 0) + 1);
                             
                             totalSaidas += quantidade;
                             totalAtendimentos++;
