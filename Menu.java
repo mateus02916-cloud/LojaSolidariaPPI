@@ -134,6 +134,8 @@ public class Menu {
             System.out.println("Ano Inválido!");
             return;
         }
+
+        System.out.println();
         
         
         
