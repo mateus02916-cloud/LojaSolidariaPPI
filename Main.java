@@ -5,8 +5,7 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
+        Menu.limparTerminal();
         
         System.out.println("*********** LOGIN ***********");
         

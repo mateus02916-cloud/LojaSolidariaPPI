@@ -13,6 +13,8 @@ public class Menu {
         int opcao;
 
         do {
+            limparTerminal();
+
             System.out.println("\n=== CONTROLE DE ESTOQUE - LOJA DE ROUPAS ===");
             System.out.println("1. Exibir quantidade total em estoque");
             System.out.println("2. Adicionar quantidade (Entrada)");
@@ -27,7 +29,7 @@ public class Menu {
 
             switch (opcao) {
                 case 1:
-                    estoque.exibirEstoqueTotal();  // AGORA MOSTRA APENAS TOTAL
+                    estoque.exibirEstoqueTotal();  
                     break;
                 case 2:
                     menuAdicionar();
@@ -116,18 +118,33 @@ public class Menu {
     
     private void menuRelatorio() {
         System.out.println("\n=== GERAR RELATÓRIO MENSAL ===");
-        System.out.print("Digite o mês (1-12): ");
+        System.out.print("Digite o mês: ");
         int mes = scanner.nextInt();
-        
-        System.out.print("Digite o ano (ex: 2025): ");
-        int ano = scanner.nextInt();
-        scanner.nextLine();
-        
+
         if (mes < 1 || mes > 12) {
             System.out.println("Mês inválido!");
             return;
         }
         
+        System.out.print("Digite o ano: ");
+        int ano = scanner.nextInt();
+        scanner.nextLine();
+
+        if ( ano < 2000 || ano > 2999) {
+            System.out.println("Ano Inválido!");
+            return;
+        }
+        
+        
+        
         estoque.gerarRelatorioMensal(mes, ano);
     }
+    
+    
+    public static void limparTerminal() {
+    
+    System.out.print("\033[H\033[2J");
+    System.out.flush();
+}
+
 }

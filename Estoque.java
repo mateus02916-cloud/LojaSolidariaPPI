@@ -3,6 +3,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
+
 public class Estoque {
     private static String ARQUIVO_REGISTROS = "Registros.csv";
     private static String[] CATEGORIAS = { "Masculinos", "Femininos", "Infantil", "Calçados", "Diversos" };
@@ -17,9 +18,10 @@ public class Estoque {
     
     private void salvarRegistro(String tipo, String categoria, int quantidade) {
         try (PrintWriter pw = new PrintWriter(new FileWriter(ARQUIVO_REGISTROS, true))) {
-            LocalDate hoje = LocalDate.now();
-            String data = hoje.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-            pw.println(tipo + "," + categoria + "," + quantidade + "," + data);
+                Registro novoRegistro = new Registro (tipo, categoria, quantidade, LocalDate.now());
+                pw.println(novoRegistro.toString());
+            
+
         } catch (IOException e) {
             System.out.println("Erro ao salvar registro: " + e.getMessage());
         }
@@ -29,40 +31,19 @@ public class Estoque {
         return CATEGORIAS;
     }
     
-    public void exibirEstoqueTotal() {
-        int totalEstoque = 0;
-        
-        File arquivo = new File(ARQUIVO_REGISTROS);
-        if (!arquivo.exists()) {
-            System.out.println("\n📦 Quantidade em estoque total == 0 unidades");
-            return;
-        }
-        
-        try (BufferedReader br = new BufferedReader(new FileReader(ARQUIVO_REGISTROS))) {
-            String linha;
-            while ((linha = br.readLine()) != null) {
-                String[] dados = linha.split(",");
-                if (dados.length == 4) {
-                    String tipo = dados[0].trim();
-                    int quantidade = Integer.parseInt(dados[2].trim());
-                    
-                    if (tipo.equals("ENTRADA")) {
-                        totalEstoque += quantidade;
-                    } else if (tipo.equals("SAIDA")) {
-                        totalEstoque -= quantidade;
-                    }
-                }
-            }
-        } catch (IOException e) {
-            System.out.println("Erro ao calcular estoque: " + e.getMessage());
-        }
-        
-        System.out.println("\n" + "=".repeat(40));
-        System.out.println("📦 QUANTIDADE EM ESTOQUE TOTAL");
-        System.out.println("=".repeat(40));
-        System.out.printf("TOTAL == %,d unidades%n", totalEstoque);
-        System.out.println("=".repeat(40));
-    }
+   public void exibirEstoqueTotal() {
+    int total = calcularEstoqueAtual();
+    
+    
+    
+    
+    System.out.println("\n" + "=".repeat(40));
+    System.out.println("📦 QUANTIDADE EM ESTOQUE TOTAL");
+    System.out.println("=".repeat(40));
+    
+    System.out.printf("TOTAL == %,d unidades%n", total);
+    System.out.println("=".repeat(40));
+}
     
     public void listarCategorias() {
         System.out.println("\n=== CATEGORIAS DISPONÍVEIS ===");
@@ -85,6 +66,7 @@ public class Estoque {
     }
     
     public void removerQuantidade(String categoria, int quantidade) {
+        
         if (quantidade <= 0) {
             System.out.println("Quantidade deve ser maior que zero!");
             return;
