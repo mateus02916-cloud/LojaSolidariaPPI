@@ -134,6 +134,8 @@ public class Menu {
             System.out.println("Ano Inválido!");
             return;
         }
+
+        System.out.println();
         
         System.out.print("Observações 1 (ex: peças descartas, doações de empresas/instituições): ");
         String obs1 = scanner.nextLine();
