@@ -18,7 +18,7 @@ public class Estoque {
     
     private void salvarRegistro(String tipo, String categoria, int quantidade) {
         try (PrintWriter pw = new PrintWriter(new FileWriter(ARQUIVO_REGISTROS, true))) {
-                Registro novoRegistro = new Registro (tipo, categoria, quantidade, LocalDate.now());
+                Itens novoRegistro = new Itens (tipo, categoria, quantidade, LocalDate.now());
                 pw.println(novoRegistro.toString());
             
 
@@ -174,7 +174,7 @@ public class Estoque {
         }
         
         // Entradas por categoria
-        System.out.println("\n📈 ENTRADAS (RECEBIDOS) NO MÊS:");
+        System.out.println("\n📈 DOAÇÕES (ENTRADAS) NO MÊS:");
         System.out.println("-".repeat(35));
         
         for (String cat : CATEGORIAS) {
@@ -199,8 +199,7 @@ public class Estoque {
                 int itensDia = entry.getValue();
                 int atendimentosDia = atendimentosPorDia.getOrDefault(data, 0);
                 
-                System.out.printf("%-12s | %,15d | %,12d%n", 
-                                data, itensDia, atendimentosDia);
+                System.out.printf("%-12s | %,15d | %,12d%n", data, itensDia, atendimentosDia);
             }
         }
         

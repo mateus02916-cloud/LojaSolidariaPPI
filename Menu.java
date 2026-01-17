@@ -15,7 +15,7 @@ public class Menu {
         do {
             limparTerminal();
 
-            System.out.println("\n=== CONTROLE DE ESTOQUE - LOJA DE ROUPAS ===");
+            System.out.println("\n=== CONTROLE DE ESTOQUE - LOJA DE SOLIDÁRIA ===");
             System.out.println("1. Exibir quantidade total em estoque");
             System.out.println("2. Adicionar quantidade (Entrada)");
             System.out.println("3. Remover quantidade (Saída)");
