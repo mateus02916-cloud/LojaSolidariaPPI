@@ -114,7 +114,7 @@ public class Estoque {
         return totalEstoque;
     }
     
-    public void gerarRelatorioMensal(int mes, int ano) {
+    public void gerarRelatorioMensal(int mes, int ano, String obs1, String obs2) {
         System.out.println("\n" + "=".repeat(50));
         System.out.printf("📊 RELATÓRIO MENSAL - %02d/%d%n", mes, ano);
         System.out.println("=".repeat(50));
@@ -181,6 +181,15 @@ public class Estoque {
         
         System.out.println("-".repeat(35));
         System.out.printf("TOTAL DE ENTRADAS: %,9d unidades%n", totalEntradas);
+
+        // Área de observação 1 (ex: "Foram descartados 474 itens...")
+        if (!obs1.isEmpty()) {
+            System.out.println("");
+            System.out.println("-".repeat(35));
+            System.out.println(" OBSERVAÇÕES / DESCARTES:");
+            System.out.println(" " + obs1);
+            System.out.println("-".repeat(35));
+        }
         
         // Saídas por dia
         System.out.println("\n📅 SAÍDAS POR DIA NO MÊS:");
@@ -209,5 +218,15 @@ public class Estoque {
         System.out.println("\n💼 ESTOQUE ATUAL (Geral):");
         System.out.println("-".repeat(35));
         System.out.printf("Quantidade total em estoque == %,d unidades%n", estoqueAtual);
+        System.out.println("\n");
+
+          // Área de observação 2 (Ações Externas)
+        if (!obs2.isEmpty()) {
+            System.out.println("-".repeat(35));
+            System.out.println(" AÇÕES EXTERNAS / OUTRAS OBSERVAÇÕES:");
+            System.out.println(" [ ] " + obs2); 
+            System.out.println("-".repeat(35));
+        }
+        System.out.println("\n");
     }
 }

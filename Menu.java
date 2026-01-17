@@ -135,9 +135,13 @@ public class Menu {
             return;
         }
         
+        System.out.print("Observações 1 (ex: peças descartas, doações de empresas/instituições): ");
+        String obs1 = scanner.nextLine();
         
+        System.out.print("Observações 2 (ex: ações externas): ");
+        String obs2 = scanner.nextLine();
         
-        estoque.gerarRelatorioMensal(mes, ano);
+        estoque.gerarRelatorioMensal(mes, ano, obs1, obs2);
     }
     
     
