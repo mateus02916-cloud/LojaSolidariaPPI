@@ -117,9 +117,10 @@ O sistema atende às funcionalidades básicas propostas na PPI, porém ainda pod
 
 ```
 ├── Main.java        // Classe principal do sistema
-├── Menu.java        // Interface de menu em modo texto
+├── Menu.java        // Interface de menu exibido no console
 ├── Estoque.java     // Regras de negócio e manipulação do estoque
-├── estoque.csv      // Arquivo de dados do estoque
+├── Registros.csv    // Arquivo de dados do estoque
+├── Itens.java       // Classe modelo que representa os itens do registro do estoque
 ```
 
 ---
