@@ -1,5 +1,5 @@
-# LojaSolidariaPPI
-# Loja Solidária Irmã Dulce
+
+# Loja Solidária - PPI
 
 ### Sistema de Controle de Estoque e Relatórios Mensais
 
