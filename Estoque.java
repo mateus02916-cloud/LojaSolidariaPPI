@@ -86,6 +86,7 @@ public class Estoque {
         System.out.println("  (Registrado como SAÍDA no sistema)");
     }
     
+    //mateus
     private int calcularEstoqueAtual() {
         int totalEstoque = 0;
         

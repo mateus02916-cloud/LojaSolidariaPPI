@@ -13,6 +13,7 @@ public class Menu {
         int opcao;
 
         do {
+
             limparTerminal();
 
             System.out.println("\n=== CONTROLE DE ESTOQUE - LOJA DE SOLIDÁRIA ===");
@@ -120,9 +121,11 @@ public class Menu {
         System.out.println("\n=== GERAR RELATÓRIO MENSAL ===");
         System.out.print("Digite o mês: ");
         int mes = scanner.nextInt();
+        scanner.nextLine();
 
         if (mes < 1 || mes > 12) {
             System.out.println("Mês inválido!");
+             scanner.nextLine();
             return;
         }
         
