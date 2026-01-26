@@ -1,13 +1,13 @@
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class Itens {
+public class Registros {
     private String tipo; // "ENTRADA" ou "SAIDA"
     private String categoria;
     private int quantidade;
     private LocalDate data;
     
-    public Itens(String tipo, String categoria, int quantidade, LocalDate data) {
+    public Registros(String tipo, String categoria, int quantidade, LocalDate data) {
         this.tipo = tipo;
         this.categoria = categoria;
         this.quantidade = quantidade;
