@@ -1,11 +1,13 @@
 import java.util.Scanner;
 
 public class Menu {
-    private Estoque estoque;
+    private CadastraEstoque estoque;
+    private CadastroEmprestimos emprestimos;
     private Scanner scanner;
 
     public Menu() {
-        estoque = new Estoque();
+        estoque = new CadastraEstoque();
+        emprestimos = new CadastroEmprestimos();
         scanner = new Scanner(System.in);
     }
 
@@ -13,24 +15,62 @@ public class Menu {
         int opcao;
 
         do {
-
             limparTerminal();
 
-            System.out.println("\n=== CONTROLE DE ESTOQUE - LOJA DE SOLIDÁRIA ===");
+            System.out.println("\n=== SISTEMA LOJA SOLIDÁRIA ===");
+            System.out.println("1. Estoque de doações");
+            System.out.println("2. Empréstimos");
+            System.out.println("0. Sair");
+            System.out.print("Escolha uma opção: ");
+
+            opcao = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (opcao) {
+                case 1:
+                    menuEstoqueDoacoes();
+                    break;
+                case 2:
+                    menuEmprestimos();
+                    break;
+                case 0:
+                    System.out.println("Saindo do sistema...");
+                    break;
+                default:
+                    System.out.println("Opção inválida! Tente novamente.");
+            }
+
+            if (opcao != 0) {
+                System.out.println("\nPressione Enter para continuar...");
+                scanner.nextLine();
+            }
+
+        } while (opcao != 0);
+
+        scanner.close();
+    }
+
+    private void menuEstoqueDoacoes() {
+        int opcao;
+
+        do {
+            limparTerminal();
+
+            System.out.println("\n=== ESTOQUE DE DOAÇÕES ===");
             System.out.println("1. Exibir quantidade total em estoque");
             System.out.println("2. Adicionar quantidade (Entrada)");
             System.out.println("3. Remover quantidade (Saída)");
             System.out.println("4. Listar categorias");
             System.out.println("5. Gerar relatório mensal");
-            System.out.println("0. Sair");
+            System.out.println("0. Voltar");
             System.out.print("Escolha uma opção: ");
 
             opcao = scanner.nextInt();
-            scanner.nextLine(); 
+            scanner.nextLine();
 
             switch (opcao) {
                 case 1:
-                    estoque.exibirEstoqueTotal();  
+                    estoque.exibirEstoqueTotal();
                     break;
                 case 2:
                     menuAdicionar();
@@ -45,18 +85,130 @@ public class Menu {
                     menuRelatorio();
                     break;
                 case 0:
-                    System.out.println("Saindo do sistema...");
                     break;
                 default:
-                    System.out.println("Opção inválida! Tente novamente.");
+                    System.out.println("Opção inválida!");
             }
 
             if (opcao != 0) {
                 System.out.println("\nPressione Enter para continuar...");
                 scanner.nextLine();
             }
+
         } while (opcao != 0);
-        scanner.close();
+    }
+
+    private void menuEmprestimos() {
+        int opcao;
+
+        do {
+            limparTerminal();
+
+            System.out.println("\n=== MENU DE EMPRÉSTIMOS ===");
+            System.out.println("1. Adicionar quantidade ao estoque");
+            System.out.println("2. Cadastrar empréstimo");
+            System.out.println("3. Devolução de empréstimo");
+            System.out.println("4. Exibir empréstimos");
+            System.out.println("5. Exibir estoque de empréstimos");
+            System.out.println("0. Voltar");
+            System.out.print("Escolha uma opção: ");
+
+            opcao = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (opcao) {
+                case 1:
+                    menuAdicionarQuantidadeEmprestimos();
+                    break;
+                case 2:
+                    menuCadastrarEmprestimo();
+                    break;
+                case 3:
+                    menuDevolucaoEmprestimo();
+                    break;
+                case 4:
+                    emprestimos.listarEmprestimos();
+                    break;
+                case 5:
+                    emprestimos.exibirEmprestimos();
+                    break;
+                case 0:
+                    break;
+                default:
+                    System.out.println("Opção inválida!");
+            }
+
+            if (opcao != 0) {
+                System.out.println("\nPressione Enter para continuar...");
+                scanner.nextLine();
+            }
+
+        } while (opcao != 0);
+    }
+
+    private String escolherTipoEmprestimo() {
+        System.out.println("1. Masculino");
+        System.out.println("2. Feminino");
+        System.out.print("Escolha o tipo: ");
+
+        int escolha = scanner.nextInt();
+        scanner.nextLine();
+
+        if (escolha == 1) {
+            return "Masculino";
+        } else if (escolha == 2) {
+            return "Feminino";
+        } else {
+            System.out.println("Tipo inválido!");
+            return "";
+        }
+    }
+
+    private void menuAdicionarQuantidadeEmprestimos() {
+        System.out.println("\n=== ADICIONAR QUANTIDADE AO ESTOQUE DE EMPRÉSTIMOS ===");
+
+        String tipo = escolherTipoEmprestimo();
+
+        if (tipo.isEmpty()) {
+            return;
+        }
+
+        System.out.print("Digite a quantidade: ");
+        int quantidade = scanner.nextInt();
+        scanner.nextLine();
+
+        emprestimos.adicionarQuantidadeEmprestimos(tipo, quantidade);
+    }
+
+    private void menuCadastrarEmprestimo() {
+        System.out.println("\n=== CADASTRAR EMPRÉSTIMO ===");
+
+        System.out.print("Nome: ");
+        String nome = scanner.nextLine();
+
+        System.out.print("CPF: ");
+        String cpf = scanner.nextLine();
+
+        String tipo = escolherTipoEmprestimo();
+
+        if (tipo.isEmpty()) {
+            return;
+        }
+
+        System.out.print("Quantidade emprestada: ");
+        int quantidade = scanner.nextInt();
+        scanner.nextLine();
+
+        emprestimos.registrarEmprestimo(nome, cpf, tipo, quantidade);
+    }
+
+    private void menuDevolucaoEmprestimo() {
+        System.out.println("\n=== DEVOLUÇÃO DE EMPRÉSTIMO ===");
+
+        System.out.print("Digite o CPF: ");
+        String cpf = scanner.nextLine();
+
+        emprestimos.registrarDevolucao(cpf);
     }
 
     private void menuAdicionar() {
@@ -79,11 +231,6 @@ public class Menu {
         System.out.print("Digite a quantidade a adicionar: ");
         int quantidade = scanner.nextInt();
         scanner.nextLine();
-
-        if (quantidade <= 0) {
-            System.out.println("Quantidade deve ser maior que zero!");
-            return;
-        }
 
         estoque.adicionarQuantidade(categorias[escolha - 1], quantidade);
     }
@@ -109,51 +256,41 @@ public class Menu {
         int quantidade = scanner.nextInt();
         scanner.nextLine();
 
-        if (quantidade <= 0) {
-            System.out.println("Quantidade deve ser maior que zero!");
-            return;
-        }
-
         estoque.removerQuantidade(categorias[escolha - 1], quantidade);
     }
-    
+
     private void menuRelatorio() {
         System.out.println("\n=== GERAR RELATÓRIO MENSAL ===");
+
         System.out.print("Digite o mês: ");
         int mes = scanner.nextInt();
         scanner.nextLine();
 
         if (mes < 1 || mes > 12) {
             System.out.println("Mês inválido!");
-             scanner.nextLine();
             return;
         }
-        
+
         System.out.print("Digite o ano: ");
         int ano = scanner.nextInt();
         scanner.nextLine();
 
-        if ( ano < 2000 || ano > 2999) {
-            System.out.println("Ano Inválido!");
+        if (ano < 2000 || ano > 2999) {
+            System.out.println("Ano inválido!");
             return;
         }
 
-        System.out.println();
-        
-        System.out.print("Observações 1 (ex: peças descartas, doações de empresas/instituições): ");
+        System.out.print("Observações 1: ");
         String obs1 = scanner.nextLine();
-        
-        System.out.print("Observações 2 (ex: ações externas): ");
+
+        System.out.print("Observações 2: ");
         String obs2 = scanner.nextLine();
-        
+
         estoque.gerarRelatorioMensal(mes, ano, obs1, obs2);
     }
-    
-    
-    public static void limparTerminal() {
-    
-    System.out.print("\033[H\033[2J");
-    System.out.flush();
-}
 
+    public static void limparTerminal() {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
+    }
 }
