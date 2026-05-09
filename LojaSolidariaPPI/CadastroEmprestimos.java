@@ -89,6 +89,114 @@ public class CadastroEmprestimos {
         }
     }
 
+    public void cadastrarPessoa(String nome, String cpf, String tipo){
+        if (verificarCadastro(cpf)){
+            System.out.println("Pessoa já possui cadastro!");
+            return;
+        }
+
+        try (PrintWriter pw = new PrintWriter(new FileWriter(ARQUIVO_EMPRESTIMOS, true))){
+            String data = LocalDate.now().format(formatter);
+
+            pw.println(nome + "," + cpf + ",0," + tipo + ",false," + data);
+
+            System.out.println("✓ Pessoa cadastrada com sucesso!");
+
+
+        }catch (IOException e){
+            System.out.println("Erro ao cadastrar pessoa" + e.getMessage());
+        }
+
+
+    }
+
+
+    public boolean verificarCadastro(String cpf){
+        try (BufferedReader br = new BufferedReader(new FileReader(ARQUIVO_EMPRESTIMOS))){
+
+            String linha;
+
+            while ((linha = br.readLine()) != null) {
+                String [] i = linha.split(",");
+
+                if (i.length == 6){
+
+                    String cpfArq = i[1].trim();
+                    
+                    if (cpfArq.equals(cpf)){
+                        return true;
+                    }
+
+
+                }
+                
+            }
+
+        }catch (IOException e){
+
+        }
+
+        return false;
+
+
+    }
+
+    public void registrarEmprestimo(String cpf, int quantidade){
+        
+        if (quantidade <= 0){
+
+        System.out.println("Quantidade deve ser maior que zero!");
+            return;
+        }
+        List<String> linhas = new ArrayList<>();
+        Map<String, Integer> emprestimos = lerArquivoEmprestimos();
+
+        boolean encontrado = false;
+        boolean realizado = false;
+
+        try (BufferedReader br = new BufferedReader(new FileReader(ARQUIVO_EMPRESTIMOS))){
+            String linha;
+
+            while ((linha = br.readLine()) != null){
+                String [] i = linha.split (",");
+
+                if (i.length == 6){
+                    String nome = i[0];
+                    String cpfArq = i[1];
+                    int qtdAtual = Integer.parseInt(i[2].trim());
+                    String tipo = i [3];
+                    boolean ativo = Boolean.parseBoolean(i[4].trim());
+                    String data = i [5];
+
+                    if (cpfArq.equals(cpf)){
+                        encontrado = true;
+
+                        if (ativo){
+                            System.out.println("Pessoa já possui empréstimo ativo.");
+                                linhas.add(linha);
+                                continue;
+                        }
+
+                        int estoqueAtual = emprestimos.getOrDefault(tipo, 0);
+
+                        if (estoqueAtual < quantidade) {
+                            System.err.println("Estoque insuficiente para o tipo: " + tipo);
+                            linhas.add(linha);
+                            continue;
+                        }
+
+                    }
+
+                }
+
+
+            }
+
+
+        }
+    
+    }
+
     public void listarEmprestimos() {
         System.out.println("\n=== EMPRÉSTIMOS ATIVOS ===");
 

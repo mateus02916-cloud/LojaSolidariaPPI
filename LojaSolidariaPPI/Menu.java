@@ -33,6 +33,9 @@ public class Menu {
                 case 2:
                     menuEmprestimos();
                     break;
+                case 3:
+                    
+                    break;
                 case 0:
                     System.out.println("Saindo do sistema...");
                     break;
@@ -110,6 +113,7 @@ public class Menu {
             System.out.println("3. Devolução de empréstimo");
             System.out.println("4. Exibir empréstimos");
             System.out.println("5. Exibir estoque de empréstimos");
+            System.out.println("6. Cadastrar Pessoa");
             System.out.println("0. Voltar");
             System.out.print("Escolha uma opção: ");
 
@@ -131,6 +135,9 @@ public class Menu {
                     break;
                 case 5:
                     emprestimos.exibirEmprestimos();
+                    break;
+                case 6:
+                    menuCadastrarPessoa();
                     break;
                 case 0:
                     break;
@@ -179,6 +186,26 @@ public class Menu {
 
         emprestimos.adicionarQuantidadeEmprestimos(tipo, quantidade);
     }
+
+        private void menuCadastrarPessoa(){
+            System.out.println("\n=== CADASTRAR PESSOA ===");
+
+            System.out.println("Nome: ");
+            String nome = scanner.nextLine();
+
+            System.out.println("CPF: ");
+            String cpf = scanner.nextLine();
+
+            String tipo = escolherTipoEmprestimo();
+
+            if (tipo.isEmpty()){
+                return;
+            }
+
+            emprestimos.cadastrarPessoa(nome, cpf, tipo);
+
+
+        }
 
     private void menuCadastrarEmprestimo() {
         System.out.println("\n=== CADASTRAR EMPRÉSTIMO ===");
