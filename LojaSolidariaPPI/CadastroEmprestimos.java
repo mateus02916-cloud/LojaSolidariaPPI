@@ -141,61 +141,89 @@ public class CadastroEmprestimos {
 
     }
 
-    public void registrarEmprestimo(String cpf, int quantidade){
-        
-        if (quantidade <= 0){
+   public void registrarEmprestimo(String cpf, int quantidade) {
 
+    if (quantidade <= 0) {
         System.out.println("Quantidade deve ser maior que zero!");
-            return;
-        }
-        List<String> linhas = new ArrayList<>();
-        Map<String, Integer> emprestimos = lerArquivoEmprestimos();
+        return;
+    }
 
-        boolean encontrado = false;
-        boolean realizado = false;
+    List<String> linhas = new ArrayList<>();
+    Map<String, Integer> emprestimos = lerArquivoEmprestimos();
 
-        try (BufferedReader br = new BufferedReader(new FileReader(ARQUIVO_EMPRESTIMOS))){
-            String linha;
+    boolean encontrado = false;
+    boolean realizado = false;
 
-            while ((linha = br.readLine()) != null){
-                String [] i = linha.split (",");
+    try (BufferedReader br = new BufferedReader(new FileReader(ARQUIVO_EMPRESTIMOS))) {
+        String linha;
 
-                if (i.length == 6){
-                    String nome = i[0];
-                    String cpfArq = i[1];
-                    int qtdAtual = Integer.parseInt(i[2].trim());
-                    String tipo = i [3];
-                    boolean ativo = Boolean.parseBoolean(i[4].trim());
-                    String data = i [5];
+        while ((linha = br.readLine()) != null) {
+            String[] i = linha.split(",");
 
-                    if (cpfArq.equals(cpf)){
-                        encontrado = true;
+            if (i.length == 6) {
+                String nome = i[0];
+                String cpfArq = i[1];
+                int qtdAtual = Integer.parseInt(i[2].trim());
+                String tipo = i[3];
+                boolean ativo = Boolean.parseBoolean(i[4].trim());
+                String data = i[5];
 
-                        if (ativo){
-                            System.out.println("Pessoa já possui empréstimo ativo.");
-                                linhas.add(linha);
-                                continue;
-                        }
+                if (cpfArq.equals(cpf)) {
+                    encontrado = true;
 
-                        int estoqueAtual = emprestimos.getOrDefault(tipo, 0);
-
-                        if (estoqueAtual < quantidade) {
-                            System.err.println("Estoque insuficiente para o tipo: " + tipo);
-                            linhas.add(linha);
-                            continue;
-                        }
-
+                    if (ativo) {
+                        System.out.println("Pessoa já possui empréstimo ativo.");
+                        linhas.add(linha);
+                        continue;
                     }
 
+                    int estoqueAtual = emprestimos.getOrDefault(tipo, 0);
+
+                    if (estoqueAtual < quantidade) {
+                        System.out.println("Estoque insuficiente para o tipo: " + tipo);
+                        linhas.add(linha);
+                        continue;
+                    }
+
+                    emprestimos.put(tipo, estoqueAtual - quantidade);
+
+                    qtdAtual = quantidade;
+                    ativo = true;
+                    data = LocalDate.now().format(formatter);
+
+                    realizado = true;
+
+                    System.out.println("✓ Empréstimo realizado para " + nome);
                 }
 
+                linhas.add(nome + "," + cpfArq + "," + qtdAtual + "," + tipo + "," + ativo + "," + data);
+            }
+        }
 
+    } catch (IOException e) {
+        System.out.println("Erro ao ler empréstimos: " + e.getMessage());
+        return;
+    }
+
+    if (!encontrado) {
+        System.out.println("Cadastro não encontrado.");
+        return;
+    }
+
+    if (realizado) {
+        try (PrintWriter pw = new PrintWriter(new FileWriter(ARQUIVO_EMPRESTIMOS))) {
+            for (String linha : linhas) {
+                pw.println(linha);
             }
 
-
+        } catch (IOException e) {
+            System.out.println("Erro ao realizar empréstimo: " + e.getMessage());
+            return;
         }
-    
+
+        salvarArquivoEmprestimos(emprestimos);
     }
+}
 
     public void listarEmprestimos() {
         System.out.println("\n=== EMPRÉSTIMOS ATIVOS ===");
@@ -278,4 +306,56 @@ public class CadastroEmprestimos {
             System.out.println("CPF não encontrado ou empréstimo já devolvido.");
         }
     }
+
+        public void pesquisarCadastro(String cpf){
+
+            try (BufferedReader br = new BufferedReader(new FileReader(ARQUIVO_EMPRESTIMOS))){
+                
+                String linha;
+                boolean encontrado = false;
+
+                while ((linha = br.readLine()) != null) {
+
+                    String[] i = linha.split(",");
+
+            if (i.length == 6) {
+
+                String nome = i[0];
+                String cpfArq = i[1];
+                String quantidade = i[2];
+                String tipo = i[3];
+                String ativo = i[4];
+                String data = i[5];
+
+                if (cpfArq.equals(cpf)){
+
+                    System.out.println(" \n === CADASTRO ENCONTRADO ===");
+
+                    System.out.println(" Nome: " + nome);
+
+                    System.out.println("CPF: " + cpfArq + "Tipo" + tipo + " Empréstimo ativo: " + ativo);
+
+                    encontrado = true;
+
+                    break;
+
+
+                }
+                    
+                }
+
+
+
+            }if (!encontrado){
+                System.out.println("Cadastro não encontrado!");
+            }
+            
+
+
+        }catch (IOException e) {
+        System.out.println("Erro ao pesquisar cadastro: " + e.getMessage());
+
+        }
+}
+
 }

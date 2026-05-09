@@ -114,6 +114,7 @@ public class Menu {
             System.out.println("4. Exibir empréstimos");
             System.out.println("5. Exibir estoque de empréstimos");
             System.out.println("6. Cadastrar Pessoa");
+            System.out.println("7. Pesquisar pessoa cadastrada");
             System.out.println("0. Voltar");
             System.out.print("Escolha uma opção: ");
 
@@ -125,7 +126,7 @@ public class Menu {
                     menuAdicionarQuantidadeEmprestimos();
                     break;
                 case 2:
-                    menuCadastrarEmprestimo();
+                    menuRealizarEmprestimo();
                     break;
                 case 3:
                     menuDevolucaoEmprestimo();
@@ -138,6 +139,9 @@ public class Menu {
                     break;
                 case 6:
                     menuCadastrarPessoa();
+                    break;
+                case 7:
+                    menuPesquisarCadastro();
                     break;
                 case 0:
                     break;
@@ -207,26 +211,28 @@ public class Menu {
 
         }
 
-    private void menuCadastrarEmprestimo() {
-        System.out.println("\n=== CADASTRAR EMPRÉSTIMO ===");
+        private void menuPesquisarCadastro(){
+            System.out.println(" === PESQUISAR CADASTRO ===");
+            System.out.println(" Digite o CPF: ");
+            String cpf = scanner.nextLine();
 
-        System.out.print("Nome: ");
-        String nome = scanner.nextLine();
+            emprestimos.pesquisarCadastro(cpf);
 
-        System.out.print("CPF: ");
-        String cpf = scanner.nextLine();
 
-        String tipo = escolherTipoEmprestimo();
-
-        if (tipo.isEmpty()) {
-            return;
         }
 
-        System.out.print("Quantidade emprestada: ");
-        int quantidade = scanner.nextInt();
+    private void menuRealizarEmprestimo() {
+        System.out.println("\n === REALIZAR EMPRÉSTIMO === ");
+
+        System.out.println("CPF: ");
+        String cpf = scanner.nextLine();
+
+        System.out.println("Quantidade emprestada: ");
         scanner.nextLine();
 
-        emprestimos.registrarEmprestimo(nome, cpf, tipo, quantidade);
+        emprestimos.registrarEmprestimo(cpf, 0);
+
+
     }
 
     private void menuDevolucaoEmprestimo() {
@@ -274,6 +280,7 @@ public class Menu {
         int escolha = scanner.nextInt();
         scanner.nextLine();
 
+        
         if (escolha < 1 || escolha > categorias.length) {
             System.out.println("Opção inválida!");
             return;
