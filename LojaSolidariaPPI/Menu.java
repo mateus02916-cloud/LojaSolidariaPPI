@@ -228,9 +228,11 @@ public class Menu {
         String cpf = scanner.nextLine();
 
         System.out.println("Quantidade emprestada: ");
+        int quantidade = scanner.nextInt();
         scanner.nextLine();
+    
 
-        emprestimos.registrarEmprestimo(cpf, 0);
+        emprestimos.registrarEmprestimo(cpf, quantidade);
 
 
     }

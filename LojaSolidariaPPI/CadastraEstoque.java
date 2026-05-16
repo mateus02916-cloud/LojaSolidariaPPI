@@ -114,6 +114,49 @@ public class CadastraEstoque {
         
         return totalEstoque;
     }
+
+  /*  private int calcularEstoqueCategoria(String categoria) {
+
+    int estoqueCategoria = 0;
+
+    File arquivo = new File(ARQUIVO_ESTOQUE);
+
+    if (!arquivo.exists()) {
+        return 0;
+    }
+
+    try (BufferedReader br = new BufferedReader(new FileReader(ARQUIVO_ESTOQUE))) {
+
+        String linha;
+
+        while ((linha = br.readLine()) != null) {
+
+            String[] dados = linha.split(",");
+
+            if (dados.length == 4) {
+
+                String tipo = dados[0].trim();
+                String categoriaArq = dados[1].trim();
+                int quantidade = Integer.parseInt(dados[2].trim());
+
+                if (categoriaArq.equals(categoria)) {
+
+                    if (tipo.equals("ENTRADA")) {
+                        estoqueCategoria += quantidade;
+
+                    } else if (tipo.equals("SAIDA")) {
+                        estoqueCategoria -= quantidade;
+                    }
+                }
+            }
+        }
+
+    } catch (IOException e) {
+        System.out.println("Erro ao calcular estoque da categoria: " + e.getMessage());
+    }
+
+    return estoqueCategoria;
+}     */
     
     public void gerarRelatorioMensal(int mes, int ano, String obs1, String obs2) {
         System.out.println("\n" + "=".repeat(50));
