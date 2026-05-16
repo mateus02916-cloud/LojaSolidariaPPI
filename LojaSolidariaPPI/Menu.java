@@ -157,10 +157,11 @@ public class Menu {
         } while (opcao != 0);
     }
 
-    private String escolherTipoEmprestimo() {
+    private String escolherCategoriaEmprestimo() {
+        System.out.print("Escolha o tipo: ");
         System.out.println("1. Masculino");
         System.out.println("2. Feminino");
-        System.out.print("Escolha o tipo: ");
+        
 
         int escolha = scanner.nextInt();
         scanner.nextLine();
@@ -178,9 +179,9 @@ public class Menu {
     private void menuAdicionarQuantidadeEmprestimos() {
         System.out.println("\n=== ADICIONAR QUANTIDADE AO ESTOQUE DE EMPRÉSTIMOS ===");
 
-        String tipo = escolherTipoEmprestimo();
+        String categoria = escolherCategoriaEmprestimo();
 
-        if (tipo.isEmpty()) {
+        if (categoria.isEmpty()) {
             return;
         }
 
@@ -188,7 +189,7 @@ public class Menu {
         int quantidade = scanner.nextInt();
         scanner.nextLine();
 
-        emprestimos.adicionarQuantidadeEmprestimos(tipo, quantidade);
+        emprestimos.adicionarQuantidadeEmprestimos(categoria, quantidade);
     }
 
         private void menuCadastrarPessoa(){
@@ -200,13 +201,16 @@ public class Menu {
             System.out.println("CPF: ");
             String cpf = scanner.nextLine();
 
-            String tipo = escolherTipoEmprestimo();
+            System.out.println("Telefone: ");
+            String telefone = scanner.nextLine();
 
-            if (tipo.isEmpty()){
+            String categoria = escolherCategoriaEmprestimo();
+
+            if (categoria.isEmpty()){
                 return;
             }
 
-            emprestimos.cadastrarPessoa(nome, cpf, tipo);
+            emprestimos.cadastrarPessoa(nome, cpf, telefone, categoria);
 
 
         }
@@ -246,8 +250,10 @@ public class Menu {
         emprestimos.registrarDevolucao(cpf);
     }
 
+
+        //ADICIONA QUANTIDADE DE ESTOQUE DOAÇÕES
     private void menuAdicionar() {
-        System.out.println("\n=== ADICIONAR QUANTIDADE (REGISTRAR ENTRADA) ===");
+        System.out.println("\n=== ADICIONAR QUANTIDADE (REGISTRAR ENTRADA ESTOQUE) ===");
         String[] categorias = estoque.getCategorias();
 
         for (int i = 0; i < categorias.length; i++) {
@@ -270,8 +276,10 @@ public class Menu {
         estoque.adicionarQuantidade(categorias[escolha - 1], quantidade);
     }
 
+
+        //REMOVE QUANTIDADE DE ESTOQUE DOAÇÕES   
     private void menuRemover() {
-        System.out.println("\n=== REMOVER QUANTIDADE (REGISTRAR SAÍDA) ===");
+        System.out.println("\n=== REMOVER QUANTIDADE (REGISTRAR SAÍDA ESTOQUE) ===");
         String[] categorias = estoque.getCategorias();
 
         for (int i = 0; i < categorias.length; i++) {

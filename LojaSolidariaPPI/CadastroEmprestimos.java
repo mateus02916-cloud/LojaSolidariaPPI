@@ -280,8 +280,9 @@ public class CadastroEmprestimos {
         salvarArquivoEmprestimos(estoqueEmprestimos);
 
         if (!encontrado){
-            System.out.println("CPF não encontrado ou empréstimo já devolvido!");
+            System.out.println("CPF não encontrado ou empréstimo já devolvido!" );
         }
+    }
 
      
 
