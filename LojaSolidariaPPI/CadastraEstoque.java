@@ -7,6 +7,9 @@ import java.util.*;
 public class CadastraEstoque {
     private static String ARQUIVO_ESTOQUE = "Estoque.csv";
     private static String[] CATEGORIAS = { "Masculinos", "Femininos", "Infantil", "Calçados", "Diversos" };
+
+
+    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     
     public CadastraEstoque() {
         // Verifica se o arquivo existe
@@ -15,10 +18,55 @@ public class CadastraEstoque {
             System.out.println(" Sistema de registros inicializado ");
         }
     }
+
+    private Estoque converterLinhaParaEstoque(String linha) {
+            String [] dados = linha.split(",");
+
+            if (dados.length != 4){
+                return null;
+            }
+
+            String tipo = dados[0].trim();
+            String categoria = dados[1].trim();
+            int quantidade = Integer.parseInt(dados[2].trim());
+            LocalDate dataEvento = LocalDate.parse(dados[3].trim(), formatter);
+
+            return new Estoque (tipo, categoria, quantidade, dataEvento);
+
+
+    }
+
+    private List<Estoque> lerListaEstoque(){
+        List<Estoque> lista = new ArrayList<>();
+
+        try (BufferedReader br = new BufferedReader(new FileReader(ARQUIVO_ESTOQUE))){
+            String linha;
+
+            while ((linha = br.readLine()) != null){
+                Estoque estoque = converterLinhaParaEstoque(linha);
+
+                if(estoque != null){
+                    lista.add(estoque);
+                }
+
+
+            }
+
+        }catch (IOException e){
+            System.out.println("Erro ao ler estoque " + e.getMessage());
+
+        }
+
+        
+        
+        return lista;
+
+
+    }
+
     
-    private void salvarRegistro(String tipo, String categoria, int quantidade) {
+    private void salvarRegistro(Estoque novoRegistro) {
         try (PrintWriter pw = new PrintWriter(new FileWriter(ARQUIVO_ESTOQUE, true))) {
-                Estoque novoRegistro = new Estoque(tipo, categoria, quantidade, LocalDate.now());
                 pw.println(novoRegistro.toString());
             
 
@@ -58,11 +106,14 @@ public class CadastraEstoque {
             return;
         }
         
-        // Salvar como ENTRADA no registro
-        salvarRegistro("ENTRADA", categoria, quantidade);
+        Estoque novoRegistro = new Estoque("Entrada", categoria, quantidade, LocalDate.now());
+
+        salvarRegistro(novoRegistro);
         
-        System.out.printf("✓ Adicionadas %,d unidades de %s%n", quantidade, categoria);
-        System.out.println("  (Registrado como ENTRADA no sistema)");
+        System.out.println(" (Registrado como ENTRADA no sistema");
+        System.out.printf("✓ Adicionadas %,d unidades de %s%n ", quantidade, categoria);
+
+       
     }
     
     public void removerQuantidade(String categoria, int quantidade) {
@@ -72,15 +123,17 @@ public class CadastraEstoque {
             return;
         }
         
-        // Primeiro verificar se tem estoque suficiente
-        int estoqueAtual = calcularEstoqueAtual();
-        if (estoqueAtual < quantidade) {
-            System.out.printf("✗ Estoque insuficiente! Disponível: %,d unidades%n", estoqueAtual);
-            return;
-        }
+       int estoqueAtual = calcularEstoqueAtual();
+
+       if (estoqueAtual < quantidade){
+        System.out.printf("✗ Estoque insuficiente! Disponível: %,d unidade%n", estoqueAtual);
+        return;
+
+       }
         
-        // Salvar como SAIDA no registro
-        salvarRegistro("SAIDA", categoria, quantidade);
+       Estoque novoRegistro = new Estoque("SAIDA", categoria, quantidade, LocalDate.now());
+
+       salvarRegistro(novoRegistro);
         
         System.out.printf("✓ Removidas %,d unidades de %s%n", quantidade, categoria);
         System.out.println("  (Registrado como SAÍDA no sistema)");
@@ -88,83 +141,55 @@ public class CadastraEstoque {
     
     //mateus
     private int calcularEstoqueAtual() {
+        List<Estoque> lista = lerListaEstoque();
+
         int totalEstoque = 0;
-        
-        File arquivo = new File(ARQUIVO_ESTOQUE);
-        if (!arquivo.exists()) return 0;
-        
-        try (BufferedReader br = new BufferedReader(new FileReader(ARQUIVO_ESTOQUE))) {
-            String linha;
-            while ((linha = br.readLine()) != null) {
-                String[] dados = linha.split(",");
-                if (dados.length == 4) {
-                    String tipo = dados[0].trim();
-                    int quantidade = Integer.parseInt(dados[2].trim());
-                    
-                    if (tipo.equals("ENTRADA")) {
-                        totalEstoque += quantidade;
-                    } else if (tipo.equals("SAIDA")) {
-                        totalEstoque -= quantidade;
-                    }
-                }
+
+        for (Estoque est : lista){
+            if (est.getTipo().equals("ENTRADA")){
+                totalEstoque += est.getQuantidade();
+
+                
+
+            }else if (est.getTipo().equals("SAIDA")){
+                totalEstoque -= est.getQuantidade();
             }
-        } catch (IOException e) {
-            System.out.println("Erro ao calcular estoque: " + e.getMessage());
         }
-        
+
         return totalEstoque;
+        
+       
     }
 
   /*  private int calcularEstoqueCategoria(String categoria) {
+  List<Estoque> lista = lerListaEstoque();
 
-    int estoqueCategoria = 0;
+        int estoqueCategoria = 0;
 
-    File arquivo = new File(ARQUIVO_ESTOQUE);
+        for (Estoque est : lista) {
+            if (est.getCategoria().equals(categoria)) {
+                if (est.getTipo().equals("ENTRADA")) {
+                    estoqueCategoria += est.getQuantidade();
 
-    if (!arquivo.exists()) {
-        return 0;
-    }
-
-    try (BufferedReader br = new BufferedReader(new FileReader(ARQUIVO_ESTOQUE))) {
-
-        String linha;
-
-        while ((linha = br.readLine()) != null) {
-
-            String[] dados = linha.split(",");
-
-            if (dados.length == 4) {
-
-                String tipo = dados[0].trim();
-                String categoriaArq = dados[1].trim();
-                int quantidade = Integer.parseInt(dados[2].trim());
-
-                if (categoriaArq.equals(categoria)) {
-
-                    if (tipo.equals("ENTRADA")) {
-                        estoqueCategoria += quantidade;
-
-                    } else if (tipo.equals("SAIDA")) {
-                        estoqueCategoria -= quantidade;
-                    }
+                } else if (est.getTipo().equals("SAIDA")) {
+                    estoqueCategoria -= est.getQuantidade();
                 }
             }
         }
 
-    } catch (IOException e) {
-        System.out.println("Erro ao calcular estoque da categoria: " + e.getMessage());
-    }
-
-    return estoqueCategoria;
+        return estoqueCategoria;
+        
 }     */
     
     public void gerarRelatorioMensal(int mes, int ano, String obs1, String obs2) {
+        List<Estoque> lista = lerListaEstoque();
+        
         System.out.println("\n" + "=".repeat(50));
         System.out.printf("📊 RELATÓRIO MENSAL - %02d/%d%n", mes, ano);
         System.out.println("=".repeat(50));
         
-        File arquivo = new File(ARQUIVO_ESTOQUE);
-        if (!arquivo.exists()) {
+       
+        if (lista.isEmpty()) {
             System.out.println("Nenhum registro encontrado!");
             return;
         }
@@ -179,40 +204,32 @@ public class CadastraEstoque {
         int totalSaidas = 0;
         int totalAtendimentos = 0;
         
-        try (BufferedReader br = new BufferedReader(new FileReader(ARQUIVO_ESTOQUE))) {
-            String linha;
-            while ((linha = br.readLine()) != null) {
-                String[] dados = linha.split(",");
-                if (dados.length == 4) {
-                    String tipo = dados[0].trim();
-                    String categoria = dados[1].trim();
-                    int quantidade = Integer.parseInt(dados[2].trim());
-                    String dataStr = dados[3].trim();
-                    
-                    DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-                    LocalDate data = LocalDate.parse(dataStr, formato);
-                    
-                    // Verificar se é do mês e ano solicitado
-                    if (data.getMonthValue() == mes && data.getYear() == ano) {
-                        if (tipo.equals("ENTRADA")) {
-                            entradasPorCategoria.put(categoria, entradasPorCategoria.getOrDefault(categoria, 0) + quantidade);
-                            totalEntradas += quantidade;
-                        } else if (tipo.equals("SAIDA")) {
-                            // Somar itens saídos por dia
-                            saidasPorDia.put(dataStr, saidasPorDia.getOrDefault(dataStr, 0) + quantidade);
-                            
-                            // Contar atendimentos (1 por saída)
-                            atendimentosPorDia.put(dataStr, atendimentosPorDia.getOrDefault(dataStr, 0) + 1);
-                            
-                            totalSaidas += quantidade;
-                            totalAtendimentos++;
-                        }
-                    }
+       for (Estoque est : lista) {
+            LocalDate data = est.getDataEvento();
+
+            if (data.getMonthValue() == mes && data.getYear() == ano) {
+                String tipo = est.getTipo();
+                String categoria = est.getCategoria();
+                int quantidade = est.getQuantidade();
+                String dataStr = est.getDataFormatada();
+
+                if (tipo.equals("ENTRADA")) {
+                    entradasPorCategoria.put(categoria, entradasPorCategoria.getOrDefault(categoria, 0) + quantidade);
+
+                    totalEntradas += quantidade;
+
+                } else if (tipo.equals("SAIDA")) {
+                     saidasPorDia.put(dataStr, saidasPorDia.getOrDefault(dataStr, 0) + quantidade);
+
+                    atendimentosPorDia.put(dataStr, atendimentosPorDia.getOrDefault(dataStr, 0) + 1);
+
+                    totalSaidas += quantidade;
+                    totalAtendimentos++;
                 }
             }
-        } catch (IOException e) {
-            System.out.println("Erro ao gerar relatório: " + e.getMessage());
         }
+                
+            
         
         // Entradas por categoria
         System.out.println("\n📈 DOAÇÕES (ENTRADAS) NO MÊS:");

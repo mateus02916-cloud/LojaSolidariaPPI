@@ -5,13 +5,13 @@ public class Estoque {
     private String tipo; // "ENTRADA" ou "SAIDA"
     private String categoria;
     private int quantidade;
-    private LocalDate data;
+    private LocalDate dataEvento;
     
-    public Estoque(String tipo, String categoria, int quantidade, LocalDate data) {
+    public Estoque(String tipo, String categoria, int quantidade, LocalDate dataEvento) {
         this.tipo = tipo;
         this.categoria = categoria;
         this.quantidade = quantidade;
-        this.data = data;
+        this.dataEvento = dataEvento;
     }
     
     
@@ -24,20 +24,37 @@ public class Estoque {
     public int getQuantidade() { 
         return quantidade; 
     }
-    public LocalDate getData() { 
-        return data; 
+    public LocalDate getDataEvento() { 
+        return dataEvento; 
     }
     
     public String getDataFormatada() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        return data.format(formatter);
+        return dataEvento.format(formatter);
     }
     
     public String getMesAno() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/yyyy");
-        return data.format(formatter);
+        return dataEvento.format(formatter);
     }
-    
+
+    public void setTipo(String tipo){
+        this.tipo = categoria;
+    }
+
+    public void setCategoria(String categoria){
+        this.categoria = categoria;
+    }
+
+    public void setQuantidade(int quantidade){
+        this.quantidade = quantidade;
+    }
+
+    public void setDataEvento(LocalDate dataEvento){
+        this.dataEvento = dataEvento;
+    }
+
+
     @Override
     public String toString() {
         return tipo + "," + categoria + "," + quantidade + "," + getDataFormatada();
