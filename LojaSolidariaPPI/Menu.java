@@ -20,6 +20,7 @@ public class Menu {
             System.out.println("\n=== SISTEMA LOJA SOLIDÁRIA ===");
             System.out.println("1. Estoque de doações");
             System.out.println("2. Empréstimos");
+            System.out.println("3. Estatísticas");
             System.out.println("0. Sair");
             System.out.print("Escolha uma opção: ");
 
@@ -34,7 +35,7 @@ public class Menu {
                     menuEmprestimos();
                     break;
                 case 3:
-                    
+                    menuEstatisticas();
                     break;
                 case 0:
                     System.out.println("Saindo do sistema...");
@@ -157,11 +158,66 @@ public class Menu {
         } while (opcao != 0);
     }
 
+    private void menuEstatisticas() {
+        int opcao;
+
+        do {
+            limparTerminal();
+
+            System.out.println("\n=== MENU DE ESTATÍSTICAS ===");
+            System.out.println("1. Mês que teve mais doações recebidas");
+            System.out.println("2. Mês que teve mais doações repassadas aos beneficiários");
+            System.out.println("3. Mês que teve menos doações recebidas");
+            System.out.println("4. Mês que teve menos doações repassadas aos beneficiários");
+            System.out.println("5. Totais de doações recebidas e repassadas mensalmente em determinado ano");
+            System.out.println("6. Totais de atendimentos realizados mensalmente em determinado ano");
+            System.out.println("7. Beneficiários com empréstimo ativo a mais de 10 dias");
+            System.out.println("0. Voltar");
+            System.out.print("Escolha uma opção: ");
+
+            opcao = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (opcao) {
+                case 1:
+
+                    break;
+                case 2:
+
+                    break;
+                case 3:
+
+                    break;
+                case 4:
+
+                    break;
+                case 5:
+
+                    break;
+                case 6:
+
+                    break;
+                case 7:
+
+                    break;
+                case 0:
+                    break;
+                default:
+                    System.out.println("Opção inválida!");
+            }
+
+            if (opcao != 0) {
+                System.out.println("\nPressione Enter para continuar...");
+                scanner.nextLine();
+            }
+
+        } while (opcao != 0);
+    }
+
     private String escolherCategoriaEmprestimo() {
         System.out.print("Escolha o tipo: ");
         System.out.println("1. Masculino");
         System.out.println("2. Feminino");
-        
 
         int escolha = scanner.nextInt();
         scanner.nextLine();
@@ -192,38 +248,36 @@ public class Menu {
         emprestimos.adicionarQuantidadeEmprestimos(categoria, quantidade);
     }
 
-        private void menuCadastrarPessoa(){
-            System.out.println("\n=== CADASTRAR PESSOA ===");
+    private void menuCadastrarPessoa() {
+        System.out.println("\n=== CADASTRAR PESSOA ===");
 
-            System.out.println("Nome: ");
-            String nome = scanner.nextLine();
+        System.out.println("Nome: ");
+        String nome = scanner.nextLine();
 
-            System.out.println("CPF: ");
-            String cpf = scanner.nextLine();
+        System.out.println("CPF: ");
+        String cpf = scanner.nextLine();
 
-            System.out.println("Telefone: ");
-            String telefone = scanner.nextLine();
+        System.out.println("Telefone: ");
+        String telefone = scanner.nextLine();
 
-            String categoria = escolherCategoriaEmprestimo();
+        String categoria = escolherCategoriaEmprestimo();
 
-            if (categoria.isEmpty()){
-                return;
-            }
-
-            emprestimos.cadastrarPessoa(nome, cpf, telefone, categoria);
-
-
+        if (categoria.isEmpty()) {
+            return;
         }
 
-        private void menuPesquisarCadastro(){
-            System.out.println(" === PESQUISAR CADASTRO ===");
-            System.out.println(" Digite o CPF: ");
-            String cpf = scanner.nextLine();
+        emprestimos.cadastrarPessoa(nome, cpf, telefone, categoria);
 
-            emprestimos.pesquisarCadastro(cpf);
+    }
 
+    private void menuPesquisarCadastro() {
+        System.out.println(" === PESQUISAR CADASTRO ===");
+        System.out.println(" Digite o CPF: ");
+        String cpf = scanner.nextLine();
 
-        }
+        emprestimos.pesquisarCadastro(cpf);
+
+    }
 
     private void menuRealizarEmprestimo() {
         System.out.println("\n === REALIZAR EMPRÉSTIMO === ");
@@ -234,10 +288,8 @@ public class Menu {
         System.out.println("Quantidade emprestada: ");
         int quantidade = scanner.nextInt();
         scanner.nextLine();
-    
 
         emprestimos.registrarEmprestimo(cpf, quantidade);
-
 
     }
 
@@ -250,8 +302,7 @@ public class Menu {
         emprestimos.registrarDevolucao(cpf);
     }
 
-
-        //ADICIONA QUANTIDADE DE ESTOQUE DOAÇÕES
+    // ADICIONA QUANTIDADE DE ESTOQUE DOAÇÕES
     private void menuAdicionar() {
         System.out.println("\n=== ADICIONAR QUANTIDADE (REGISTRAR ENTRADA ESTOQUE) ===");
         String[] categorias = estoque.getCategorias();
@@ -276,8 +327,7 @@ public class Menu {
         estoque.adicionarQuantidade(categorias[escolha - 1], quantidade);
     }
 
-
-        //REMOVE QUANTIDADE DE ESTOQUE DOAÇÕES   
+    // REMOVE QUANTIDADE DE ESTOQUE DOAÇÕES
     private void menuRemover() {
         System.out.println("\n=== REMOVER QUANTIDADE (REGISTRAR SAÍDA ESTOQUE) ===");
         String[] categorias = estoque.getCategorias();
@@ -290,7 +340,6 @@ public class Menu {
         int escolha = scanner.nextInt();
         scanner.nextLine();
 
-        
         if (escolha < 1 || escolha > categorias.length) {
             System.out.println("Opção inválida!");
             return;
