@@ -164,6 +164,7 @@ public class CadastroEmprestimos {
 
             for (Emprestimos emp : lista) {
                 if (emp.getCpf().equals(cpf)){
+                    return true;
 
                 }
             }
@@ -293,6 +294,8 @@ public class CadastroEmprestimos {
 
                 for (Emprestimos emp : lista){
 
+                    if (emp.getCpf().equals(cpf)){
+
                     System.out.println("\n === CADASTRO ENCONTRADO === ");
                     System.out.println("Nome:  " + emp.getNome());
                     System.out.println("CPF:  " + emp.getCpf());
@@ -304,7 +307,9 @@ public class CadastroEmprestimos {
 
                     encontrado = true;
                     break;
-            
+
+
+                    }
 
                 }
                  if (!encontrado){
@@ -314,9 +319,50 @@ public class CadastroEmprestimos {
            
     }
 
-               
+    /* 
+
+    public void excluirCadasgro (String cpf){
+        List <Emprestimos> lista = lerListaEmprestimos();
+
+        boolean encontrado = false;
+
+        Iterator<Emprestimos> iterator = lista.iterator();
+
+        while (iterator.hasNext()) {
+
+            Emprestimos emp = iterator.next();
+
+            if (emp.getCpf().equals(cpf)){
+
+                encontrado = true;
+
+                if (emp.isEmprestado()) {
+                    System.out.println("Não é possível excluir!");
+                    System.out.println("A pessoa possui empréstimo ativo.");
+                    return;
+
+
+                }
+
+                iterator.remove();
+
+                salvarListaEmprestimos(lista);
+
+                System.out.println("✓ Cadastro excluído com sucesso!");
+
+            }
+            
+        }
             
 
+
+
+
+    }
+
+               
+            
+*/
    
 
 

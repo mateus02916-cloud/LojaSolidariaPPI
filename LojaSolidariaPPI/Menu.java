@@ -109,12 +109,13 @@ public class Menu {
 
             System.out.println("\n=== MENU DE EMPRÉSTIMOS ===");
             System.out.println("1. Adicionar quantidade ao estoque");
-            System.out.println("2. Cadastrar empréstimo");
-            System.out.println("3. Devolução de empréstimo");
-            System.out.println("4. Exibir empréstimos");
-            System.out.println("5. Exibir estoque de empréstimos");
-            System.out.println("6. Cadastrar Pessoa");
-            System.out.println("7. Pesquisar pessoa cadastrada");
+            System.out.println("2. Cadastrar pessoa");
+            System.out.println("3. Realizar empréstimo");
+            System.out.println("4. Exibir empréstimos ativos");
+            System.out.println("5. Pesquisar cadastros");
+            System.out.println("6. Devolução de empréstimo");
+            System.out.println("7. Exibir estoque de empréstimos");
+            System.out.println("8. Excluir cadastro");
             System.out.println("0. Voltar");
             System.out.print("Escolha uma opção: ");
 
@@ -126,22 +127,24 @@ public class Menu {
                     menuAdicionarQuantidadeEmprestimos();
                     break;
                 case 2:
-                    menuRealizarEmprestimo();
+                     menuCadastrarPessoa();
                     break;
                 case 3:
-                    menuDevolucaoEmprestimo();
+                   menuRealizarEmprestimo();
                     break;
                 case 4:
                     emprestimos.listarEmprestimos();
                     break;
                 case 5:
-                    emprestimos.exibirEmprestimos();
+                    menuPesquisarCadastro();
                     break;
                 case 6:
-                    menuCadastrarPessoa();
+                    menuDevolucaoEmprestimo();
                     break;
                 case 7:
-                    menuPesquisarCadastro();
+                   emprestimos.exibirEmprestimos();
+                    break;
+                case 8:
                     break;
                 case 0:
                     break;
@@ -158,7 +161,7 @@ public class Menu {
     }
 
     private String escolherCategoriaEmprestimo() {
-        System.out.print("Escolha o tipo: ");
+        System.out.print("Escolha o categoria: ");
         System.out.println("1. Masculino");
         System.out.println("2. Feminino");
         
@@ -171,7 +174,7 @@ public class Menu {
         } else if (escolha == 2) {
             return "Feminino";
         } else {
-            System.out.println("Tipo inválido!");
+            System.out.println("Categoria inválido!");
             return "";
         }
     }
