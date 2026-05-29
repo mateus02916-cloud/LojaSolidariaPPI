@@ -168,13 +168,11 @@ public class Menu {
             limparTerminal();
 
             System.out.println("\n=== MENU DE ESTATÍSTICAS ===");
-            System.out.println("1. Mês que teve mais doações recebidas");
-            System.out.println("2. Mês que teve mais doações repassadas aos beneficiários");
-            System.out.println("3. Mês que teve menos doações recebidas");
-            System.out.println("4. Mês que teve menos doações repassadas aos beneficiários");
-            System.out.println("5. Totais de doações recebidas e repassadas mensalmente em determinado ano");
-            System.out.println("6. Totais de atendimentos realizados mensalmente em determinado ano");
-            System.out.println("7. Beneficiários com empréstimo ativo a mais de 10 dias");
+            System.out.println("1. Doações recebidas e repassadas mensalmente em determinado ano");
+            System.out.println("2. Demonstrativo mensal de doações recebidas em ordem decrescente");
+            System.out.println("3. Demonstrativo mensal de doações repassadas aos beneficiários em ordem decrescente");
+            System.out.println("4. Atendimentos realizados mensalmente em determinado ano");
+            System.out.println("5. Beneficiários com empréstimo ativo a mais de 10 dias");
             System.out.println("0. Voltar");
             System.out.print("Escolha uma opção: ");
 
@@ -197,12 +195,7 @@ public class Menu {
                 case 5:
 
                     break;
-                case 6:
 
-                    break;
-                case 7:
-
-                    break;
                 case 0:
                     break;
                 default:

@@ -36,7 +36,7 @@ public class CadastraEstoque {
 
     }
 
-    private List<Estoque> lerListaEstoque(){
+    protected List<Estoque> lerListaEstoque(){
         List<Estoque> lista = new ArrayList<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(ARQUIVO_ESTOQUE))){
@@ -56,11 +56,8 @@ public class CadastraEstoque {
             System.out.println("Erro ao ler estoque " + e.getMessage());
 
         }
-
-        
         
         return lista;
-
 
     }
 
