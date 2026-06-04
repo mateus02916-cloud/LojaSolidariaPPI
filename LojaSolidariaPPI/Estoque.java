@@ -39,7 +39,7 @@ public class Estoque {
     }
 
     public void setTipo(String tipo){
-        this.tipo = categoria;
+        this.tipo = tipo;
     }
 
     public void setCategoria(String categoria){

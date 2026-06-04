@@ -103,7 +103,7 @@ public class CadastraEstoque {
             return;
         }
         
-        Estoque novoRegistro = new Estoque("Entrada", categoria, quantidade, LocalDate.now());
+        Estoque novoRegistro = new Estoque("ENTRADA", categoria, quantidade, LocalDate.now());
 
         salvarRegistro(novoRegistro);
         
