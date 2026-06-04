@@ -3,14 +3,17 @@ import java.util.Scanner;
 public class Menu {
     private CadastraEstoque estoque;
     private CadastroEmprestimos emprestimos;
+    private FiltraEstatisticas filtraEstatisticas;
     private Scanner scanner;
 
     public Menu() {
         estoque = new CadastraEstoque();
         emprestimos = new CadastroEmprestimos();
+        filtraEstatisticas = new FiltraEstatisticas();
         scanner = new Scanner(System.in);
     }
 
+    //MENU INICIAL
     public void exibirMenu() {
         int opcao;
 
@@ -54,6 +57,7 @@ public class Menu {
         scanner.close();
     }
 
+    // SUBMENU DOAÇÕES //
     private void menuEstoqueDoacoes() {
         int opcao;
 
@@ -102,6 +106,7 @@ public class Menu {
         } while (opcao != 0);
     }
 
+    // SUBMENU EMPRÉSTIMOS //
     private void menuEmprestimos() {
         int opcao;
 
@@ -128,10 +133,10 @@ public class Menu {
                     menuAdicionarQuantidadeEmprestimos();
                     break;
                 case 2:
-                     menuCadastrarPessoa();
+                    menuCadastrarPessoa();
                     break;
                 case 3:
-                   menuRealizarEmprestimo();
+                    menuRealizarEmprestimo();
                     break;
                 case 4:
                     emprestimos.listarEmprestimos();
@@ -143,7 +148,7 @@ public class Menu {
                     menuDevolucaoEmprestimo();
                     break;
                 case 7:
-                   emprestimos.exibirEmprestimos();
+                    emprestimos.exibirEmprestimos();
                     break;
                 case 8:
                     break;
@@ -161,6 +166,7 @@ public class Menu {
         } while (opcao != 0);
     }
 
+    // SUBMENU ESTATÍSTICAS //
     private void menuEstatisticas() {
         int opcao;
 
@@ -181,21 +187,20 @@ public class Menu {
 
             switch (opcao) {
                 case 1:
-
+                    menuDoacoesMensaisNoAno();
                     break;
                 case 2:
-
+                    menuDoacoesRecebidasDecrescente();
                     break;
                 case 3:
-
+                    menuDoacoesRepassadasDecrescente();
                     break;
                 case 4:
-
+                    menuAtendimentosMensais();
                     break;
                 case 5:
-
+                    filtraEstatisticas.emprestimosAtivosAcimaDe10Dias();
                     break;
-
                 case 0:
                     break;
                 default:
@@ -209,6 +214,44 @@ public class Menu {
 
         } while (opcao != 0);
     }
+
+    private void menuDoacoesMensaisNoAno() {
+        int ano = pedirAno();
+        if (ano == -1) return;
+        filtraEstatisticas.doacoesMensaisNoAno(ano);
+    }
+ 
+    private void menuDoacoesRecebidasDecrescente() {
+        int ano = pedirAno();
+        if (ano == -1) return;
+        filtraEstatisticas.doacoesRecebidasDecrescente(ano);
+    }
+ 
+    private void menuDoacoesRepassadasDecrescente() {
+        int ano = pedirAno();
+        if (ano == -1) return;
+        filtraEstatisticas.doacoesRepassadasDecrescente(ano);
+    }
+ 
+    private void menuAtendimentosMensais() {
+        int ano = pedirAno();
+        if (ano == -1) return;
+        filtraEstatisticas.atendimentosMensaisNoAno(ano);
+    }
+ 
+    /** Solicita e valida um ano. Retorna -1 se inválido. */
+    private int pedirAno() {
+        System.out.print("Digite o ano: ");
+        int ano = scanner.nextInt();
+        scanner.nextLine();
+        if (ano < 2000 || ano > 2999) {
+            System.out.println("Ano inválido!");
+            return -1;
+        }
+        return ano;
+    }
+    //────────────────────────────────────────────────────────────────────────
+ 
 
     private String escolherCategoriaEmprestimo() {
         System.out.print("Escolha o categoria: ");
@@ -377,6 +420,7 @@ public class Menu {
 
         estoque.gerarRelatorioMensal(mes, ano, obs1, obs2);
     }
+
 
     public static void limparTerminal() {
         System.out.print("\033[H\033[2J");
