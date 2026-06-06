@@ -18,7 +18,7 @@ public class Menu {
         int opcao;
 
         do {
-            limparTerminal();
+            /*limparTerminal();*/
 
             System.out.println("\n=== SISTEMA LOJA SOLIDÁRIA ===");
             System.out.println("1. Estoque de doações");
@@ -62,7 +62,7 @@ public class Menu {
         int opcao;
 
         do {
-            limparTerminal();
+            /*limparTerminal();*/
 
             System.out.println("\n=== ESTOQUE DE DOAÇÕES ===");
             System.out.println("1. Exibir quantidade total em estoque");
@@ -111,7 +111,7 @@ public class Menu {
         int opcao;
 
         do {
-            limparTerminal();
+            /*limparTerminal();*/
 
             System.out.println("\n=== MENU DE EMPRÉSTIMOS ===");
             System.out.println("1. Adicionar quantidade ao estoque");
@@ -171,7 +171,7 @@ public class Menu {
         int opcao;
 
         do {
-            limparTerminal();
+            /*limparTerminal();*/
 
             System.out.println("\n=== MENU DE ESTATÍSTICAS ===");
             System.out.println("1. Doações recebidas e repassadas mensalmente em determinado ano");
@@ -422,8 +422,8 @@ public class Menu {
     }
 
 
-    public static void limparTerminal() {
+    /*public static void limparTerminal() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
-    }
+    }*/
 }

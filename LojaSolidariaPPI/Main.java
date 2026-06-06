@@ -8,7 +8,7 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
 
-        Menu.limparTerminal();
+        /*Menu.limparTerminal();*/
         
         System.out.println("*********** LOGIN ***********");
         
