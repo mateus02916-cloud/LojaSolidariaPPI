@@ -9,7 +9,7 @@
 import java.time.LocalDate;
 import java.util.*;
 
-public class FiltraEstatisticas extends CadastraEstoque {
+public class FiltraEstatisticas extends CadastraDoacoes {
 
     private CadastroEmprestimos cadastroEmprestimos;
 
@@ -20,7 +20,7 @@ public class FiltraEstatisticas extends CadastraEstoque {
 
     // 1. Doações recebidas e repassadas mensalmente em determinado ano
     public void doacoesMensaisNoAno(int ano) {
-        List<Estoque> lista = lerListaEstoque(); // herdado de CadastraEstoque
+        List<Doacoes> lista = lerListaEstoque(); // herdado de CadastraEstoque
 
         System.out.println("\n" + "=".repeat(55));
         System.out.printf("📊 DOAÇÕES RECEBIDAS E REPASSADAS POR MÊS — %d%n", ano);
@@ -32,7 +32,7 @@ public class FiltraEstatisticas extends CadastraEstoque {
         Map<Integer, Integer> entradasPorMes = new TreeMap<>();
         Map<Integer, Integer> saidasPorMes   = new TreeMap<>();
 
-        for (Estoque est : lista) {
+        for (Doacoes est : lista) {
             if (est.getDataEvento().getYear() != ano) continue;
 
             int mes = est.getDataEvento().getMonthValue();
@@ -66,11 +66,11 @@ public class FiltraEstatisticas extends CadastraEstoque {
     
     // 2. Doações RECEBIDAS mensalmente em ordem decrescente
     public void doacoesRecebidasDecrescente(int ano) {
-        List<Estoque> lista = lerListaEstoque();
+        List<Doacoes> lista = lerListaEstoque();
 
         Map<Integer, Integer> entradasPorMes = new HashMap<>();
 
-        for (Estoque est : lista) {
+        for (Doacoes est : lista) {
             if (est.getDataEvento().getYear() != ano) continue;
             if (!est.getTipo().equalsIgnoreCase("ENTRADA")) continue;
 
@@ -105,11 +105,11 @@ public class FiltraEstatisticas extends CadastraEstoque {
     // 3. Doações REPASSADAS mensalmente em ordem decrescente
     
     public void doacoesRepassadasDecrescente(int ano) {
-        List<Estoque> lista = lerListaEstoque();
+        List<Doacoes> lista = lerListaEstoque();
 
         Map<Integer, Integer> saidasPorMes = new HashMap<>();
 
-        for (Estoque est : lista) {
+        for (Doacoes est : lista) {
             if (est.getDataEvento().getYear() != ano) continue;
             if (!est.getTipo().equalsIgnoreCase("SAIDA")) continue;
 
@@ -143,12 +143,12 @@ public class FiltraEstatisticas extends CadastraEstoque {
 
     // 4. Atendimentos realizados mensalmente em um ano
     public void atendimentosMensaisNoAno(int ano) {
-        List<Estoque> lista = lerListaEstoque();
+        List<Doacoes> lista = lerListaEstoque();
 
         // Cada registro de SAIDA = 1 atendimento (conforme lógica de gerarRelatorioMensal)
         Map<Integer, Integer> atendimentosPorMes = new TreeMap<>();
 
-        for (Estoque est : lista) {
+        for (Doacoes est : lista) {
             if (est.getDataEvento().getYear() != ano) continue;
             if (!est.getTipo().equalsIgnoreCase("SAIDA")) continue;
 

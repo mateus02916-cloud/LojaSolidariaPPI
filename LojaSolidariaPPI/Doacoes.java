@@ -1,13 +1,13 @@
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class Estoque {
+public class Doacoes {
     private String tipo; // "ENTRADA" ou "SAIDA"
     private String categoria;
     private int quantidade;
     private LocalDate dataEvento;
     
-    public Estoque(String tipo, String categoria, int quantidade, LocalDate dataEvento) {
+    public Doacoes(String tipo, String categoria, int quantidade, LocalDate dataEvento) {
         this.tipo = tipo;
         this.categoria = categoria;
         this.quantidade = quantidade;

@@ -1,13 +1,13 @@
 import java.util.Scanner;
 
 public class Menu {
-    private CadastraEstoque estoque;
+    private CadastraDoacoes estoqueDoacoes;
     private CadastroEmprestimos emprestimos;
     private FiltraEstatisticas filtraEstatisticas;
     private Scanner scanner;
 
     public Menu() {
-        estoque = new CadastraEstoque();
+        estoqueDoacoes = new CadastraDoacoes();
         emprestimos = new CadastroEmprestimos();
         filtraEstatisticas = new FiltraEstatisticas();
         scanner = new Scanner(System.in);
@@ -78,7 +78,7 @@ public class Menu {
 
             switch (opcao) {
                 case 1:
-                    estoque.exibirEstoqueTotal();
+                    estoqueDoacoes.exibirEstoqueTotal();
                     break;
                 case 2:
                     menuAdicionar();
@@ -87,7 +87,7 @@ public class Menu {
                     menuRemover();
                     break;
                 case 4:
-                    estoque.listarCategorias();
+                    estoqueDoacoes.listarCategorias();
                     break;
                 case 5:
                     menuRelatorio();
@@ -344,7 +344,7 @@ public class Menu {
     // ADICIONA QUANTIDADE DE ESTOQUE DOAÇÕES
     private void menuAdicionar() {
         System.out.println("\n=== ADICIONAR QUANTIDADE (REGISTRAR ENTRADA ESTOQUE) ===");
-        String[] categorias = estoque.getCategorias();
+        String[] categorias = estoqueDoacoes.getCategorias();
 
         for (int i = 0; i < categorias.length; i++) {
             System.out.println((i + 1) + ". " + categorias[i]);
@@ -363,13 +363,13 @@ public class Menu {
         int quantidade = scanner.nextInt();
         scanner.nextLine();
 
-        estoque.adicionarQuantidade(categorias[escolha - 1], quantidade);
+        estoqueDoacoes.adicionarQuantidade(categorias[escolha - 1], quantidade);
     }
 
     // REMOVE QUANTIDADE DE ESTOQUE DOAÇÕES
     private void menuRemover() {
         System.out.println("\n=== REMOVER QUANTIDADE (REGISTRAR SAÍDA ESTOQUE) ===");
-        String[] categorias = estoque.getCategorias();
+        String[] categorias = estoqueDoacoes.getCategorias();
 
         for (int i = 0; i < categorias.length; i++) {
             System.out.println((i + 1) + ". " + categorias[i]);
@@ -388,7 +388,7 @@ public class Menu {
         int quantidade = scanner.nextInt();
         scanner.nextLine();
 
-        estoque.removerQuantidade(categorias[escolha - 1], quantidade);
+        estoqueDoacoes.removerQuantidade(categorias[escolha - 1], quantidade);
     }
 
     private void menuRelatorio() {
@@ -418,7 +418,7 @@ public class Menu {
         System.out.print("Observações 2: ");
         String obs2 = scanner.nextLine();
 
-        estoque.gerarRelatorioMensal(mes, ano, obs1, obs2);
+        estoqueDoacoes.gerarRelatorioMensal(mes, ano, obs1, obs2);
     }
 
 

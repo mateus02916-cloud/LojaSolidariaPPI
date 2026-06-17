@@ -4,14 +4,14 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 
-public class CadastraEstoque {
+public class CadastraDoacoes {
     private static String ARQUIVO_ESTOQUE = "Estoque.csv";
     private static String[] CATEGORIAS = { "Masculinos", "Femininos", "Infantil", "Calçados", "Diversos" };
 
 
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     
-    public CadastraEstoque() {
+    public CadastraDoacoes() {
         // Verifica se o arquivo existe
         File arquivo = new File(ARQUIVO_ESTOQUE);
         if (!arquivo.exists()) {
@@ -19,7 +19,7 @@ public class CadastraEstoque {
         }
     }
 
-    private Estoque converterLinhaParaEstoque(String linha) {
+    private Doacoes converterLinhaParaEstoque(String linha) {
             String [] dados = linha.split(",");
 
             if (dados.length != 4){
@@ -31,19 +31,19 @@ public class CadastraEstoque {
             int quantidade = Integer.parseInt(dados[2].trim());
             LocalDate dataEvento = LocalDate.parse(dados[3].trim(), formatter);
 
-            return new Estoque (tipo, categoria, quantidade, dataEvento);
+            return new Doacoes (tipo, categoria, quantidade, dataEvento);
 
 
     }
 
-    protected List<Estoque> lerListaEstoque(){
-        List<Estoque> lista = new ArrayList<>();
+    protected List<Doacoes> lerListaEstoque(){
+        List<Doacoes> lista = new ArrayList<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(ARQUIVO_ESTOQUE))){
             String linha;
 
             while ((linha = br.readLine()) != null){
-                Estoque estoque = converterLinhaParaEstoque(linha);
+                Doacoes estoque = converterLinhaParaEstoque(linha);
 
                 if(estoque != null){
                     lista.add(estoque);
@@ -62,7 +62,7 @@ public class CadastraEstoque {
     }
 
     
-    private void salvarRegistro(Estoque novoRegistro) {
+    private void salvarRegistro(Doacoes novoRegistro) {
         try (PrintWriter pw = new PrintWriter(new FileWriter(ARQUIVO_ESTOQUE, true))) {
                 pw.println(novoRegistro.toString());
             
@@ -103,7 +103,7 @@ public class CadastraEstoque {
             return;
         }
         
-        Estoque novoRegistro = new Estoque("ENTRADA", categoria, quantidade, LocalDate.now());
+        Doacoes novoRegistro = new Doacoes("ENTRADA", categoria, quantidade, LocalDate.now());
 
         salvarRegistro(novoRegistro);
         
@@ -128,7 +128,7 @@ public class CadastraEstoque {
 
        }
         
-       Estoque novoRegistro = new Estoque("SAIDA", categoria, quantidade, LocalDate.now());
+       Doacoes novoRegistro = new Doacoes("SAIDA", categoria, quantidade, LocalDate.now());
 
        salvarRegistro(novoRegistro);
         
@@ -138,11 +138,11 @@ public class CadastraEstoque {
     
     //mateus
     private int calcularEstoqueAtual() {
-        List<Estoque> lista = lerListaEstoque();
+        List<Doacoes> lista = lerListaEstoque();
 
         int totalEstoque = 0;
 
-        for (Estoque est : lista){
+        for (Doacoes est : lista){
             if (est.getTipo().equals("ENTRADA")){
                 totalEstoque += est.getQuantidade();
 
@@ -179,7 +179,7 @@ public class CadastraEstoque {
 }     */
     
     public void gerarRelatorioMensal(int mes, int ano, String obs1, String obs2) {
-        List<Estoque> lista = lerListaEstoque();
+        List<Doacoes> lista = lerListaEstoque();
         
         System.out.println("\n" + "=".repeat(50));
         System.out.printf("📊 RELATÓRIO MENSAL - %02d/%d%n", mes, ano);
@@ -201,7 +201,7 @@ public class CadastraEstoque {
         int totalSaidas = 0;
         int totalAtendimentos = 0;
         
-       for (Estoque est : lista) {
+       for (Doacoes est : lista) {
             LocalDate data = est.getDataEvento();
 
             if (data.getMonthValue() == mes && data.getYear() == ano) {
