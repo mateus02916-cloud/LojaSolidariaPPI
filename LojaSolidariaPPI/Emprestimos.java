@@ -24,7 +24,6 @@ public class Emprestimos {
 
     }
 
-
     public String getNome(){
         return nome;
     }

@@ -4,8 +4,15 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class CadastraDoacoes extends GerenciadorArquivos {
-    private static String ARQUIVO_ESTOQUE = "Estoque.csv";
+
     private static String[] CATEGORIAS = { "Masculinos", "Femininos", "Infantil", "Calçados", "Diversos" };
+
+    private static String ARQUIVO_ESTOQUE = "EstoqueDoacoes.csv";
+
+    @Override
+    protected String getNomeArquivo() {
+        return ARQUIVO_ESTOQUE;
+    }
 
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
@@ -35,28 +42,45 @@ public class CadastraDoacoes extends GerenciadorArquivos {
     }
 
     protected List<Doacoes> lerListaEstoque() {
+
         List<Doacoes> lista = new ArrayList<>();
 
-        try (BufferedReader br = new BufferedReader(new FileReader(ARQUIVO_ESTOQUE))) {
-            String linha;
+        for (String linha : lerLinhasArquivo(ARQUIVO_ESTOQUE)) {
 
-            while ((linha = br.readLine()) != null) {
-                Doacoes estoque = (Doacoes) converterLinha(linha);
+            Doacoes estoque = converterLinha(linha);
 
-                if (estoque != null) {
-                    lista.add(estoque);
-                }
-
+            if (estoque != null) {
+                lista.add(estoque);
             }
-
-        } catch (IOException e) {
-            System.out.println("Erro ao ler estoque " + e.getMessage());
-
         }
 
         return lista;
-
     }
+
+    // /* protected List<Doacoes> lerListaEstoque() {
+    // List<Doacoes> lista = new ArrayList<>();
+
+    // try (BufferedReader br = new BufferedReader(new FileReader(ARQUIVO_ESTOQUE)))
+    // {
+    // String linha;
+
+    // while ((linha = br.readLine()) != null) {
+    // Doacoes estoque = (Doacoes) converterLinha(linha);
+
+    // if (estoque != null) {
+    // lista.add(estoque);
+    // }
+
+    // }
+
+    // } catch (IOException e) {
+    // System.out.println("Erro ao ler estoque " + e.getMessage());
+
+    // }
+
+    // return lista;
+
+    // } */
 
     private void salvarRegistro(Doacoes novoRegistro) {
         try (PrintWriter pw = new PrintWriter(new FileWriter(ARQUIVO_ESTOQUE, true))) {

@@ -9,18 +9,20 @@
 import java.time.LocalDate;
 import java.util.*;
 
-public class FiltraEstatisticas extends CadastraDoacoes {
+public class FiltraEstatisticas {
 
+    
+    private CadastraDoacoes cadastroDoacoes;
     private CadastroEmprestimos cadastroEmprestimos;
 
     public FiltraEstatisticas() {
-        super();
-        this.cadastroEmprestimos = new CadastroEmprestimos();
+        cadastroDoacoes = new CadastraDoacoes();
+        cadastroEmprestimos = new CadastroEmprestimos();
     }
 
     // 1. Doações recebidas e repassadas mensalmente em determinado ano
     public void doacoesMensaisNoAno(int ano) {
-        List<Doacoes> lista = lerListaEstoque(); // herdado de CadastraEstoque
+        List<Doacoes> lista = cadastroDoacoes.lerListaEstoque();; 
 
         System.out.println("\n" + "=".repeat(55));
         System.out.printf("📊 DOAÇÕES RECEBIDAS E REPASSADAS POR MÊS — %d%n", ano);
@@ -66,7 +68,7 @@ public class FiltraEstatisticas extends CadastraDoacoes {
     
     // 2. Doações RECEBIDAS mensalmente em ordem decrescente
     public void doacoesRecebidasDecrescente(int ano) {
-        List<Doacoes> lista = lerListaEstoque();
+        List<Doacoes> lista = cadastroDoacoes.lerListaEstoque();
 
         Map<Integer, Integer> entradasPorMes = new HashMap<>();
 
@@ -105,7 +107,7 @@ public class FiltraEstatisticas extends CadastraDoacoes {
     // 3. Doações REPASSADAS mensalmente em ordem decrescente
     
     public void doacoesRepassadasDecrescente(int ano) {
-        List<Doacoes> lista = lerListaEstoque();
+        List<Doacoes> lista = cadastroDoacoes.lerListaEstoque();
 
         Map<Integer, Integer> saidasPorMes = new HashMap<>();
 
@@ -143,7 +145,7 @@ public class FiltraEstatisticas extends CadastraDoacoes {
 
     // 4. Atendimentos realizados mensalmente em um ano
     public void atendimentosMensaisNoAno(int ano) {
-        List<Doacoes> lista = lerListaEstoque();
+        List<Doacoes> lista = cadastroDoacoes.lerListaEstoque();
 
         // Cada registro de SAIDA = 1 atendimento (conforme lógica de gerarRelatorioMensal)
         Map<Integer, Integer> atendimentosPorMes = new TreeMap<>();
@@ -180,7 +182,7 @@ public class FiltraEstatisticas extends CadastraDoacoes {
     // 5. Beneficiários com empréstimo ativo há mais de 10 dias
     public void emprestimosAtivosAcimaDe10Dias() {
 
-        List<Emprestimos> lista = cadastroEmprestimos.lerListaEmprestimosPublico();
+        List<Emprestimos> lista = cadastroEmprestimos.lerListaEmprestimos();;
 
         LocalDate hoje = LocalDate.now();
 
@@ -213,5 +215,6 @@ public class FiltraEstatisticas extends CadastraDoacoes {
 
         System.out.println("=".repeat(60));
     }
+
 }
 

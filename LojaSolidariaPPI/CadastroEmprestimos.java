@@ -3,11 +3,15 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-
 public class CadastroEmprestimos extends GerenciadorArquivos {
 
-    private static String ARQUIVO_EMPRESTIMOS = "Emprestimos.csv";
     private static String ARQUIVO_ESTOQUE_EMPRESTIMOS = "EstoqueParaEmprestimos.csv";
+    private static String ARQUIVO_EMPRESTIMOS = "Emprestimos.csv";
+
+    @Override
+    protected String getNomeArquivo() {
+        return ARQUIVO_EMPRESTIMOS;
+    }
 
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
@@ -42,7 +46,7 @@ public class CadastroEmprestimos extends GerenciadorArquivos {
         }
     }
 
-    // pega a linha do arquivo CSV e conversa em uma objeto da classe Emprestimos
+    @Override
     protected Emprestimos converterLinha(String linha) {
         String[] i = linha.split(",");
 
@@ -59,7 +63,6 @@ public class CadastroEmprestimos extends GerenciadorArquivos {
         LocalDate dataEmprestimo = LocalDate.parse(i[6].trim(), formatter);
 
         return new Emprestimos(nome, cpf, telefone, quantidade, categoria, emprestado, dataEmprestimo);
-
     }
 
     public void salvarListaEmprestimos(List<Emprestimos> lista) {
@@ -76,32 +79,20 @@ public class CadastroEmprestimos extends GerenciadorArquivos {
 
     }
 
-    private List<Emprestimos> lerListaEmprestimos() {
+    protected List<Emprestimos> lerListaEmprestimos() {
+
         List<Emprestimos> lista = new ArrayList<>();
 
-        try (BufferedReader br = new BufferedReader(new FileReader(ARQUIVO_EMPRESTIMOS))) {
-            String linha;
+        for (String linha : lerLinhasArquivo(ARQUIVO_EMPRESTIMOS)) {
 
-            while ((linha = br.readLine()) != null) {
+            Emprestimos emp = converterLinha(linha);
 
-                Emprestimos emp = converterLinha(linha);
-
-                if (emp != null) {
-                    lista.add(emp);
-                }
-
+            if (emp != null) {
+                lista.add(emp);
             }
-
-        } catch (IOException e) {
-            System.out.println("Erro ao ler empréstimos: " + e.getMessage());
-
         }
 
         return lista;
-    }
-
-    public List<Emprestimos> lerListaEmprestimosPublico() {
-        return lerListaEmprestimos();
     }
 
     public void exibirEmprestimos() {
@@ -257,7 +248,6 @@ public class CadastroEmprestimos extends GerenciadorArquivos {
                 break;
 
             }
-
         }
 
         salvarListaEmprestimos(lista);
