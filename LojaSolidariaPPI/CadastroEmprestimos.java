@@ -4,7 +4,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 
-public class CadastroEmprestimos {
+public class CadastroEmprestimos extends GerenciadorArquivos {
 
     private static String ARQUIVO_EMPRESTIMOS = "Emprestimos.csv";
     private static String ARQUIVO_ESTOQUE_EMPRESTIMOS = "EstoqueParaEmprestimos.csv";
@@ -43,7 +43,7 @@ public class CadastroEmprestimos {
     }
 
     // pega a linha do arquivo CSV e conversa em uma objeto da classe Emprestimos
-    private Emprestimos converterLinhaParaEmprestimos(String linha) {
+    protected Emprestimos converterLinha(String linha) {
         String[] i = linha.split(",");
 
         if (i.length != 7) {
@@ -84,7 +84,7 @@ public class CadastroEmprestimos {
 
             while ((linha = br.readLine()) != null) {
 
-                Emprestimos emp = converterLinhaParaEmprestimos(linha);
+                Emprestimos emp = converterLinha(linha);
 
                 if (emp != null) {
                     lista.add(emp);
