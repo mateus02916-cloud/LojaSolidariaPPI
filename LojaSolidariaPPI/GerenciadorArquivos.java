@@ -19,10 +19,11 @@ public abstract class GerenciadorArquivos {
                 new FileWriter(arquivo, true))) {
 
             pw.println(conteudo);
+            System.out.println("✓ Registro realiado com sucesso!");
 
         } catch (IOException e) {
-            System.out.println("Erro ao salvar arquivo: "
-                    + e.getMessage());
+            
+            System.out.println("Erro ao salvar arquivo: " + e.getMessage());
         }
     }
 

@@ -126,14 +126,7 @@ public class CadastroEmprestimos extends GerenciadorArquivos {
 
         Emprestimos novoCadastro = new Emprestimos(nome, cpf, telefone, 0, categoria, false, LocalDate.now());
 
-        try (PrintWriter pw = new PrintWriter(new FileWriter(ARQUIVO_EMPRESTIMOS, true))) {
-            pw.println(novoCadastro.toString());
-
-            System.out.println("✓ Pessoa cadastrada com sucesso!");
-
-        } catch (IOException e) {
-            System.out.println("Erro ao cadastrar pessoa" + e.getMessage());
-        }
+        adicionarLinha(ARQUIVO_EMPRESTIMOS, novoCadastro.toString());
 
     }
 

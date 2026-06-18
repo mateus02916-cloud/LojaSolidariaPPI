@@ -83,12 +83,8 @@ public class CadastraDoacoes extends GerenciadorArquivos {
     // } */
 
     private void salvarRegistro(Doacoes novoRegistro) {
-        try (PrintWriter pw = new PrintWriter(new FileWriter(ARQUIVO_ESTOQUE, true))) {
-            pw.println(novoRegistro.toString());
 
-        } catch (IOException e) {
-            System.out.println("Erro ao salvar registro: " + e.getMessage());
-        }
+        adicionarLinha(ARQUIVO_ESTOQUE, novoRegistro.toString());
     }
 
     public String[] getCategorias() {
