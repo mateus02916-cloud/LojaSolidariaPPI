@@ -1,13 +1,13 @@
 import java.util.Scanner;
 
 public class Menu {
-    private CadastraDoacoes estoqueDoacoes;
+    private CadastroDoacoes estoqueDoacoes;
     private CadastroEmprestimos emprestimos;
     private FiltraEstatisticas filtraEstatisticas;
     private Scanner scanner;
 
     public Menu() {
-        estoqueDoacoes = new CadastraDoacoes();
+        estoqueDoacoes = new CadastroDoacoes();
         emprestimos = new CadastroEmprestimos();
         filtraEstatisticas = new FiltraEstatisticas();
         scanner = new Scanner(System.in);
@@ -254,7 +254,7 @@ public class Menu {
  
 
     private String escolherCategoriaEmprestimo() {
-        System.out.print("Escolha o categoria: ");
+        System.out.println("Escolha o categoria: ");
         System.out.println("1. Masculino");
         System.out.println("2. Feminino");
 

@@ -12,11 +12,11 @@ import java.util.*;
 public class FiltraEstatisticas {
 
     
-    private CadastraDoacoes cadastroDoacoes;
+    private CadastroDoacoes cadastroDoacoes;
     private CadastroEmprestimos cadastroEmprestimos;
 
     public FiltraEstatisticas() {
-        cadastroDoacoes = new CadastraDoacoes();
+        cadastroDoacoes = new CadastroDoacoes();
         cadastroEmprestimos = new CadastroEmprestimos();
     }
 

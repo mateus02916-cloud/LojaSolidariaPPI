@@ -3,7 +3,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-public class CadastraDoacoes extends GerenciadorArquivos {
+public class CadastroDoacoes extends GerenciadorArquivos {
 
     private static String[] CATEGORIAS = { "Masculinos", "Femininos", "Infantil", "Calçados", "Diversos" };
 
@@ -16,7 +16,7 @@ public class CadastraDoacoes extends GerenciadorArquivos {
 
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-    public CadastraDoacoes() {
+    public CadastroDoacoes() {
         // Verifica se o arquivo existe
         File arquivo = new File(ARQUIVO_ESTOQUE);
         if (!arquivo.exists()) {
