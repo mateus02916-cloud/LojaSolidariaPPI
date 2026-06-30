@@ -1,17 +1,16 @@
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class Doacoes {
+public class Doacoes extends Transacao{
     private String tipo; // "ENTRADA" ou "SAIDA"
     private String categoria;
     private int quantidade;
-    private LocalDate dataEvento;
     
     public Doacoes(String tipo, String categoria, int quantidade, LocalDate dataEvento) {
+        super(quantidade, dataEvento);
         this.tipo = tipo;
         this.categoria = categoria;
         this.quantidade = quantidade;
-        this.dataEvento = dataEvento;
     }
     
     
@@ -24,19 +23,6 @@ public class Doacoes {
     public int getQuantidade() { 
         return quantidade; 
     }
-    public LocalDate getDataEvento() { 
-        return dataEvento; 
-    }
-    
-    public String getDataFormatada() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        return dataEvento.format(formatter);
-    }
-    
-    public String getMesAno() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/yyyy");
-        return dataEvento.format(formatter);
-    }
 
     public void setTipo(String tipo){
         this.tipo = tipo;
@@ -48,10 +34,6 @@ public class Doacoes {
 
     public void setQuantidade(int quantidade){
         this.quantidade = quantidade;
-    }
-
-    public void setDataEvento(LocalDate dataEvento){
-        this.dataEvento = dataEvento;
     }
 
 

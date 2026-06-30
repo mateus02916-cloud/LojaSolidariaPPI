@@ -199,7 +199,7 @@ public class FiltraEstatisticas {
             if (!emp.isEmprestado()) continue;
 
             long dias = java.time.temporal.ChronoUnit.DAYS.between(
-                emp.getDataEmpretimo(), hoje);
+                emp.getDataEmprestimo(), hoje);
 
             if (dias > 10) {
                 System.out.printf("%-20s | %-14s | %-12s | %d dias%n",

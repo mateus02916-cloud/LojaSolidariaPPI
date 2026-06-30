@@ -2,7 +2,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 
-public class Emprestimos {
+public class Emprestimos extends Transacao{
     
     private String nome;
     private String cpf;
@@ -10,18 +10,15 @@ public class Emprestimos {
     private int quantidade;
     private String categoria;
     private boolean emprestado;
-    private LocalDate dataEmprestimo;
 
     public Emprestimos(String nome, String cpf, String telefone, int quantidade, String categoria, boolean emprestado, LocalDate dataEmprestimo){
+        super(quantidade, dataEmprestimo);
         this.nome = nome;
         this.cpf = cpf;
         this.telefone = telefone;
         this.quantidade = quantidade;
         this.categoria = categoria;
         this.emprestado = emprestado;
-        this.dataEmprestimo = dataEmprestimo;
-        
-
     }
 
     public String getNome(){
@@ -49,10 +46,6 @@ public class Emprestimos {
         return emprestado;
     }
     
-    public LocalDate getDataEmpretimo(){
-        return dataEmprestimo;
-
-    }
 
     public void setNome (String nome) {
         this.nome = nome;
@@ -84,23 +77,10 @@ public class Emprestimos {
 
     }
 
-    public void setDataEmprestimo (LocalDate dataEmprestimo){
-
-        this.dataEmprestimo = dataEmprestimo;
-    }
-
-        //FORMATAR DATA
-
-    public String getDataFormatada(){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        return dataEmprestimo.format(formatter);
-    }
-
-
     @Override
 
     public String toString(){
-        return nome + "," + cpf + "," + telefone + "," + quantidade + "," + categoria + "," + emprestado + "," + getDataFormatada();
+        return nome + "," + cpf + "," + telefone + "," + quantidade + "," + categoria + "," + emprestado + "," + Transacao.getDataFormatada();
 
     }
 

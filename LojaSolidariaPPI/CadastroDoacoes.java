@@ -211,7 +211,7 @@ public class CadastroDoacoes extends GerenciadorArquivos {
         int totalAtendimentos = 0;
 
         for (Doacoes est : lista) {
-            LocalDate data = est.getDataEvento();
+            LocalDate data = est.getData();
 
             if (data.getMonthValue() == mes && data.getYear() == ano) {
                 String tipo = est.getTipo();
