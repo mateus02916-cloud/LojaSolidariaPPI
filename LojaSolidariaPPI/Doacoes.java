@@ -1,5 +1,4 @@
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 public class Doacoes extends Transacao{
     private String tipo; // "ENTRADA" ou "SAIDA"

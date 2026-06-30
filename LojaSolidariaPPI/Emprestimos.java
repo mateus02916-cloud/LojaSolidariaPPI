@@ -1,6 +1,4 @@
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-
 
 public class Emprestimos extends Transacao{
     
@@ -80,7 +78,7 @@ public class Emprestimos extends Transacao{
     @Override
 
     public String toString(){
-        return nome + "," + cpf + "," + telefone + "," + quantidade + "," + categoria + "," + emprestado + "," + Transacao.getDataFormatada();
+        return nome + "," + cpf + "," + telefone + "," + quantidade + "," + categoria + "," + emprestado + "," + getDataFormatada();
 
     }
 
