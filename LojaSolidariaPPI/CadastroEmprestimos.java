@@ -178,7 +178,7 @@ public class CadastroEmprestimos extends GerenciadorArquivos {
 
                 emp.setQuantidade(quantidade);
                 emp.setEmprestado(true);
-                emp.setDataEmprestimo(LocalDate.now());
+                emp.setData(LocalDate.now());
 
                 realizado = true;
 

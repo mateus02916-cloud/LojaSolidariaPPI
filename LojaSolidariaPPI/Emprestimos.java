@@ -2,18 +2,14 @@ import java.time.LocalDate;
 
 public class Emprestimos extends Transacao{
     
-    private String nome;
-    private String cpf;
-    private String telefone;
+   
     private int quantidade;
     private String categoria;
     private boolean emprestado;
 
-    public Emprestimos(String nome, String cpf, String telefone, int quantidade, String categoria, boolean emprestado, LocalDate dataEmprestimo){
+    public Emprestimos( int quantidade, String categoria, boolean emprestado, LocalDate dataEmprestimo){
         super(quantidade, dataEmprestimo);
-        this.nome = nome;
-        this.cpf = cpf;
-        this.telefone = telefone;
+       
         this.quantidade = quantidade;
         this.categoria = categoria;
         this.emprestado = emprestado;
@@ -44,21 +40,6 @@ public class Emprestimos extends Transacao{
         return emprestado;
     }
     
-
-    public void setNome (String nome) {
-        this.nome = nome;
-
-    }
-
-    public void setCpf (String cpf){
-        this.cpf = cpf;
-
-    }
-
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
-
-    }
 
     public void setQuantidade(int quantidade){
         this.quantidade = quantidade;
