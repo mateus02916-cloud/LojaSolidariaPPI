@@ -3,23 +3,23 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class GerenciadorArquivos {
+public interface GerenciadorArquivos {
 
-    protected DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-    // Cada filha informa qual arquivo usa
-    protected abstract String getNomeArquivo();
+    // Cada DAO informa qual arquivo usa
+    String getNomeArquivo();
 
-    // Cada filha converte a linha para seu objeto
-    protected abstract Object converterLinha(String linha);
+    // Cada DAO converte a linha para seu objeto
+    Object converterLinha(String linha);
 
-    protected void adicionarLinha(String arquivo, String conteudo) {
+    // default é um método que possui uma implementação concreta dentro da própria interface e não é obrigado a implementar 
+    default void adicionarLinha(String arquivo, String conteudo) {
 
         try (PrintWriter pw = new PrintWriter(
                 new FileWriter(arquivo, true))) {
 
             pw.println(conteudo);
-            System.out.println("✓ Registro realiado com sucesso!");
+            System.out.println("✓ Registro realizado com sucesso!");
 
         } catch (IOException e) {
             
@@ -28,7 +28,7 @@ public abstract class GerenciadorArquivos {
     }
 
     // Método herdado por todas as filhas
-    protected List<String> lerLinhasArquivo(String arquivo) {
+    default List<String> lerLinhasArquivo(String arquivo) {
 
         List<String> linhas = new ArrayList<>();
 
