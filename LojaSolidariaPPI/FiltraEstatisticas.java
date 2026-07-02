@@ -35,9 +35,9 @@ public class FiltraEstatisticas {
         Map<Integer, Integer> saidasPorMes   = new TreeMap<>();
 
         for (Doacoes est : lista) {
-            if (est.getDataEvento().getYear() != ano) continue;
+            if (est.getData().getYear() != ano) continue;
 
-            int mes = est.getDataEvento().getMonthValue();
+            int mes = est.getData().getMonthValue();
 
             if (est.getTipo().equalsIgnoreCase("ENTRADA")) {
                 entradasPorMes.merge(mes, est.getQuantidade(), Integer::sum);

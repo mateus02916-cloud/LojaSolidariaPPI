@@ -1,10 +1,8 @@
 import java.io.*;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 public interface GerenciadorArquivos {
-
 
     // Cada DAO informa qual arquivo usa
     String getNomeArquivo();

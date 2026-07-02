@@ -1,62 +1,61 @@
 import java.io.*;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-public class CadastroDoacoes extends GerenciadorArquivos {
+public class CadastroDoacoes {
 
-    private static String[] CATEGORIAS = { "Masculinos", "Femininos", "Infantil", "Calçados", "Diversos" };
+    private static String[] CATEGORIAS = { "Masculinos", "Femininos", "Infantil", "Calçados", "Diversos", "Não especificado"};
 
-    private static String ARQUIVO_ESTOQUE = "EstoqueDoacoes.csv";
+    private DoacaoDAO doacaoDAO;
 
-    @Override
-    protected String getNomeArquivo() {
-        return ARQUIVO_ESTOQUE;
-    }
-
-    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    // @Override
+    // protected String getNomeArquivo() {
+    //     return ARQUIVO_ESTOQUE;
+    // }
 
     public CadastroDoacoes() {
+        doacaoDAO = new DoacaoDAO();
+
         // Verifica se o arquivo existe
-        File arquivo = new File(ARQUIVO_ESTOQUE);
+        File arquivo = new File(doacaoDAO.getNomeArquivo());
         if (!arquivo.exists()) {
             System.out.println(" Sistema de registros inicializado ");
         }
     }
 
-    @Override
-    protected Doacoes converterLinha(String linha) {
-        String[] dados = linha.split(",");
+    // @Override
+    // protected Doacoes converterLinha(String linha) {
+    //     String[] dados = linha.split(",");
 
-        if (dados.length != 4) {
-            return null;
-        }
+    //     if (dados.length != 4) {
+    //         return null;
+    //     }
 
-        String tipo = dados[0].trim();
-        String categoria = dados[1].trim();
-        int quantidade = Integer.parseInt(dados[2].trim());
-        LocalDate dataEvento = LocalDate.parse(dados[3].trim(), formatter);
+    //     String tipo = dados[0].trim();
+    //     String categoria = dados[1].trim();
+    //     int quantidade = Integer.parseInt(dados[2].trim());
+    //     LocalDate dataEvento = LocalDate.parse(dados[3].trim(), formatter);
 
-        return new Doacoes(tipo, categoria, quantidade, dataEvento);
+    //     return new Doacoes(tipo, categoria, quantidade, dataEvento);
 
-    }
+    // }
 
-    protected List<Doacoes> lerListaEstoque() {
+    // protected List<Doacoes> lerListaEstoque() {
 
-        List<Doacoes> lista = new ArrayList<>();
+    //     List<Doacoes> lista = new ArrayList<>();
 
-        for (String linha : lerLinhasArquivo(ARQUIVO_ESTOQUE)) {
+    //     for (String linha : lerLinhasArquivo(ARQUIVO_ESTOQUE)) {
 
-            Doacoes estoque = converterLinha(linha);
+    //         Doacoes estoque = converterLinha(linha);
 
-            if (estoque != null) {
-                lista.add(estoque);
-            }
-        }
+    //         if (estoque != null) {
+    //             lista.add(estoque);
+    //         }
+    //     }
 
-        return lista;
-    }
-
+    //     return lista;
+    // }
+ 
     // /* protected List<Doacoes> lerListaEstoque() {
     // List<Doacoes> lista = new ArrayList<>();
 
@@ -82,10 +81,10 @@ public class CadastroDoacoes extends GerenciadorArquivos {
 
     // } */
 
-    private void salvarRegistro(Doacoes novoRegistro) {
+    // private void salvarRegistro(Doacoes novoRegistro) {
 
-        adicionarLinha(ARQUIVO_ESTOQUE, novoRegistro.toString());
-    }
+    //     adicionarLinha(ARQUIVO_ESTOQUE, novoRegistro.toString());
+    // }
 
     public String[] getCategorias() {
         return CATEGORIAS;
@@ -117,7 +116,7 @@ public class CadastroDoacoes extends GerenciadorArquivos {
 
         Doacoes novoRegistro = new Doacoes("ENTRADA", categoria, quantidade, LocalDate.now());
 
-        salvarRegistro(novoRegistro);
+        doacaoDAO.salvarRegistro(novoRegistro);
 
         System.out.println(" (Registrado como ENTRADA no sistema");
         System.out.printf("✓ Adicionadas %,d unidades de %s%n ", quantidade, categoria);
@@ -141,15 +140,18 @@ public class CadastroDoacoes extends GerenciadorArquivos {
 
         Doacoes novoRegistro = new Doacoes("SAIDA", categoria, quantidade, LocalDate.now());
 
-        salvarRegistro(novoRegistro);
+        doacaoDAO.salvarRegistro(novoRegistro);
 
         System.out.printf("✓ Removidas %,d unidades de %s%n", quantidade, categoria);
         System.out.println("  (Registrado como SAÍDA no sistema)");
     }
 
+    
+
     // mateus
+    //revisar
     private int calcularEstoqueAtual() {
-        List<Doacoes> lista = lerListaEstoque();
+        List<Doacoes> lista = doacaoDAO.lerListaEstoque();
 
         int totalEstoque = 0;
 
@@ -189,7 +191,7 @@ public class CadastroDoacoes extends GerenciadorArquivos {
      */
 
     public void gerarRelatorioMensal(int mes, int ano, String obs1, String obs2) {
-        List<Doacoes> lista = lerListaEstoque();
+        List<Doacoes> lista = doacaoDAO.lerListaEstoque();
 
         System.out.println("\n" + "=".repeat(50));
         System.out.printf("📊 RELATÓRIO MENSAL - %02d/%d%n", mes, ano);

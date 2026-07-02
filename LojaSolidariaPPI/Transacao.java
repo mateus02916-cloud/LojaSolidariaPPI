@@ -1,10 +1,13 @@
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Transacao {
     
     private int id;
     private LocalDate data;
+    private List<Pecas> pecas = new ArrayList<>();
 
 
     public Transacao(int id, LocalDate data){
@@ -27,6 +30,18 @@ public abstract class Transacao {
 
     public void setData(LocalDate data) {
         this.data = data;
+    }
+
+    public List<Pecas> getPecas() {
+        return pecas;
+    }
+
+    public void setPecas(List<Pecas> pecas) {
+        this.pecas = pecas;
+    }
+
+    public void adicionarPeca(Pecas peca) {
+        this.pecas.add(peca);
     }
 
     public String getDataFormatada(){
